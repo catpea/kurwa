@@ -1,6 +1,6 @@
 {
   "name": "kurwa",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Self referential Multi User Dungeon programming challenge, an introduction to programs that curve-in on themselves.",
   "main": "index.js",
   "scripts": {

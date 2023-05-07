@@ -1,0 +1,12 @@
+{
+  "name": "kurwa",
+  "version": "1.0.0",
+  "description": "Self referential Multi User Dungeon programming challenge, an introduction to programs that curve-in on themselves.",
+  "main": "index.js",
+  "scripts": {
+    "save": "git add .; git commit -m 'New Release'; git push; npm version patch; npm publish; git push;"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

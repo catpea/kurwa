@@ -3,6 +3,15 @@ Self referential Multi User Dungeon programming challenge, an introduction to pr
 
 MUDs are typically text-based games that are played over the internet, where players explore a virtual world, interact with other players, and complete quests or challenges.
 
+## Name
+
+The name is not meant to be funny, is from latin and it means "curved" as in self referential, curved unto it self,
+early 15c. (implied in curved ), intransitive, "have or assume a curved form," from Latin curvus "crooked, curved, bent," and curvare "to bend,".
+
+You are to create multidimensional self referencing Tesseract objects,
+immaturity won't get you far in this class.
+
+
 ## Challenge
 
 The challenge is to create self referential meta-programs that offer a lot of functionality, with very little code.

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "bad-credentials",
+    "input": [
+      "ZeroCool",
+      "qwQW12!@"
+    ]
+  },
+  {
+    "name": "weak-credentials",
+    "input": [
+      "AzureDiamond",
+      "hunter2"
+    ]
+  },
+  {
+    "name": "empty-username",
+    "input": [
+      "",
+      "hunter2"
+    ]
+  },
+  {
+    "name": "empty-password",
+    "input": [
+      "alice",
+      ""
+    ]
+  }
+]

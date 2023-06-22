@@ -1,0 +1,10 @@
+[
+  {
+    "name": "id",
+    "variable": "number",
+    "control": "number",
+    "description": "",
+    "required": true,
+    "validator": "Numeric"
+  }
+]

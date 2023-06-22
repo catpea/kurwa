@@ -1,0 +1,6 @@
+{
+  "icon": "person-check",
+	"name": "sign-in",
+	"description": "Sign the user into the system.",
+	"version": "0.0.1"
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "parent",
+    "variable": "string",
+    "control": "string",
+    "description": "",
+    "required": true,
+    "validator": "Alphanumeric"
+  },
+  {
+    "name": "source",
+    "variable": "string",
+    "control": "string",
+    "description": "",
+    "required": true,
+    "validator": "Alphanumeric"
+  },
+  {
+    "name": "target",
+    "variable": "string",
+    "control": "string",
+    "description": "",
+    "required": true,
+    "validator": "Alphanumeric"
+  }
+]

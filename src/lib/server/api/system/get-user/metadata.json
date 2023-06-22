@@ -1,0 +1,6 @@
+{
+  "icon": "person-circle",
+	"name": "get-user",
+	"description": "Get the user object of the currently logged in user.",
+	"version": "0.0.1"
+}

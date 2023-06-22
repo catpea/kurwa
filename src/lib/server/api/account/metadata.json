@@ -1,0 +1,6 @@
+{
+  "icon": "person-square",
+	"name": "account",
+	"description": "User account functions.",
+	"version": "0.0.1"
+}

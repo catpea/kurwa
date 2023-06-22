@@ -1,0 +1,6 @@
+{
+  "icon": "person-up",
+	"name": "sign-up",
+	"description": "Sign up a new user.",
+	"version": "0.0.1"
+}

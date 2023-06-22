@@ -1,0 +1,6 @@
+{
+  "icon": "person-gear",
+	"name": "reset-password",
+	"description": "Offer the user a chance to reset their password. This is publicly available, therefore a stranger can issue that request, user should be able to safely ignore it.",
+	"version": "0.0.1"
+}

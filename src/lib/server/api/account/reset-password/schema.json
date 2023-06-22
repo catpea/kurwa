@@ -1,0 +1,46 @@
+[
+  {
+    "name": "username",
+    "variable": "string",
+    "control": "string",
+    "description": "",
+    "required": true,
+    "validator": "Alphanumeric"
+  },
+  {
+    "name": "password",
+    "variable": "string",
+    "control": "password",
+    "description": "strong password",
+    "required": true,
+    "validator": "StrongPassword"
+  },
+  {
+    "name": "context",
+    "variable": "string",
+    "control": "select",
+    "description": "",
+    "required": true,
+    "choice": [
+      {
+        "name": "Info",
+        "value": "info"
+      },
+      {
+        "name": "Warning",
+        "value": "warning"
+      },
+      {
+        "name": "Success",
+        "value": "success"
+      },
+      {
+        "name": "Danger",
+        "value": "danger"
+      }
+    ],
+    "default": 0,
+    "custom": false,
+    "validator": "Choice"
+  }
+]

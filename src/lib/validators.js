@@ -1,0 +1,20 @@
+import isURL from 'validator/lib/isURL';
+import isJSON from 'validator/lib/isJSON';
+import isEmail from 'validator/lib/isEmail';
+import isBoolean from 'validator/lib/isBoolean';
+import isNumeric from 'validator/lib/isNumeric';
+import isAlphanumeric from 'validator/lib/isAlphanumeric';
+import isStrongPassword from 'validator/lib/isStrongPassword';
+
+export const Empty = (input)=>input.length==0;
+export const ShortString = (input)=>input?.length>4;
+export const Url = (input)=>isURL(input||"", { protocols: ['http','https','ftp'], require_tld: true, require_protocol: false, require_host: false, require_port: false, require_valid_protocol: false, allow_underscores: false, host_whitelist: false, host_blacklist: false, allow_trailing_dot: false, allow_protocol_relative_urls: true, allow_fragments: true, allow_query_components: true, disallow_auth: false, validate_length: true });
+export const FullUrl = (input)=>isURL(input||"");
+export const Alphanumeric = (input)=>isAlphanumeric(input||"", undefined, {ignore: ' '});
+export const Numeric = (input)=>isNumeric(input||"");
+export const JSON = (input)=>isJSON(input||"");
+// export const Array = (input)=>isArray(input);
+export const Csv = (input)=>input?.length>4;
+export const Boolean = (input)=>(input===true||input===false);
+export const StrongPassword = (input)=>isStrongPassword(input||"");
+export const Choice = (input, {choice})=>choice.map(o=>o.value).includes(input);

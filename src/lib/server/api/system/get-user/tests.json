@@ -1,0 +1,14 @@
+[
+  {
+    "name": "bad-user",
+    "input": [
+      "AzureDiamond"
+    ]
+  },
+  {
+    "name": "empty-username",
+    "input": [
+      ""
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "name": "id",
+    "variable": "string",
+    "control": "string",
+    "description": "",
+    "required": true,
+    "validator": "Alphanumeric"
+  }
+]

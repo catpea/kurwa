@@ -1,0 +1,34 @@
+[
+  {
+    "name": "table",
+    "variable": "string",
+    "control": "string",
+    "description": "",
+    "required": true,
+    "validator": "Alphanumeric"
+  },
+  {
+    "name": "id",
+    "variable": "string",
+    "control": "string",
+    "description": "",
+    "required": true,
+    "validator": "Alphanumeric"
+  },
+  {
+    "name": "property",
+    "variable": "string",
+    "control": "string",
+    "description": "",
+    "required": true,
+    "validator": "Alphanumeric"
+  },
+  {
+    "name": "value",
+    "variable": "string",
+    "control": "string",
+    "description": "",
+    "required": true,
+    "validator": "Alphanumeric"
+  }
+]

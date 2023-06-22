@@ -1,0 +1,19 @@
+[
+  {
+    "name": "username",
+    "variable": "string",
+    "control": "string",
+    "description": "",
+    "required": true,
+    "validator": "Alphanumeric"
+  },
+  {
+    "name": "password",
+    "variable": "string",
+    "control": "password",
+    "description": "strong password",
+    "required": true,
+    "validator": "StrongPassword"
+  }
+  
+]

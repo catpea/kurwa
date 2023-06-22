@@ -1,0 +1,59 @@
+:root {
+  /* --bs-body-font-size: 0.7rem; */
+  /* --bs-primary-rgb: 128, 184, 20;
+  --bs-primary: rgb(var(--bs-primary-rgb)); */
+}
+
+body {
+  background: repeating-linear-gradient(45deg, #010e11, #010e11 16px, #010d11 16px, #010d11 32px);
+}
+
+
+.outline-none:focus-visible, .outline-none:focus {
+   outline:none;
+   outline-style: none;
+box-shadow: none;
+border-color: transparent;
+}
+
+
+
+/**/
+
+.transition-color {
+  transition: color 300ms linear;
+}
+.transition-bg {
+  transition: background-color 300ms linear;
+}
+.transition-border {
+  transition: border-color 300ms linear;
+}
+
+
+
+.form-control:focus {
+    box-shadow: none ! important;
+    /* border-color: initial; */
+    /* outline: 0px solid transparent; */
+}
+
+
+.svelvet-wrapper:focus {
+  outline: none ! important;
+  box-shadow: none ! important;
+
+}
+
+.form-range.thumb-dark::-moz-range-thumb {
+  background-color: var(--bs-dark-bg-subtle) ! important;
+}
+
+.form-range.thumb-dark::-webkit-slider-thumb {
+  background-color: var(--bs-dark-bg-subtle) ! important;
+}
+
+
+.svelvet-node {
+ box-shadow: 3px 3px 5px  rgb(15, 15, 15) ! important;
+}

@@ -1,0 +1,6 @@
+{
+  "icon": "person-dash",
+	"name": "sign-out",
+	"description": "Sign the currently active user out of the system.",
+	"version": "0.0.1"
+}

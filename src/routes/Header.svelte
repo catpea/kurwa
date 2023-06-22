@@ -15,7 +15,7 @@
 
 <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary shadow ">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">VPL <sup class="text-muted">dev</sup></a>
+    <a class="navbar-brand text-warning" href="/"><i class="bi bi-bezier2"></i>Kurwa <sup class="text-danger">&beta;1</sup></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,8 +23,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-				<li class="nav-item"> <a class="nav-link" class:active={locator.startsWith('/@meow/vpl')} href="/@meow/vpl">VPL <sup>app</sup></a> </li>
-				<li class="nav-item border-start border-danger-subtle"> <a class="nav-link" class:active={locator.startsWith('/administrator')} href="/administrator">System Administrator</a> </li>
+				<li class="nav-item"> <a class="nav-link" class:active={locator.startsWith('/@meow/vpl')} href="/@meow/vpl">VPL <sup>@meow</sup></a> </li>
+				<li class="nav-item border-start border-danger-subtle"> <a class="nav-link" class:active={locator.startsWith('/administrator')} href="/administrator"><i class="bi bi-house-gear"></i> Administrator</a> </li>
 				<li class="nav-item"> <a class="nav-link" class:active={locator.startsWith('/administrator/fw')} href="/administrator/fw"><i class="bi bi-fire"></i> Firewall</li>
 				<li class="nav-item"> <a class="nav-link" class:active={locator.startsWith('/administrator/api')} href="/administrator/api"><i class="bi bi-journal-code"></i> API Workbench</li>
 				<li class="nav-item"> <a class="nav-link" class:active={locator.startsWith('/administrator/gui')} href="/administrator/gui"><i class="bi bi-pip"></i> GUI Explorer</li>

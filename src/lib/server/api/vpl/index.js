@@ -2,6 +2,7 @@ import { camelCase } from 'lodash-es';
 
 import metadata from './metadata.json';
 
+import root from './root/index.js';
 import all from './all/index.js';
 import list from './list/index.js';
 import create from './create/index.js';
@@ -22,6 +23,9 @@ class Vpl {
 		return this.actions.includes(camelCase(action));
 	}
 
+	get root() {
+		return root;
+	}
 	get all() {
 		return all;
 	}

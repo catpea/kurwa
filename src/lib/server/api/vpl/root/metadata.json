@@ -1,0 +1,6 @@
+{
+  "icon": "house",
+	"name": "root",
+	"description": "Get the root node for current user.",
+	"version": "0.0.1"
+}

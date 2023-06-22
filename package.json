@@ -1,12 +1,10 @@
 {
 	"name": "kurwa",
-  "description": "Visual Programming Language built on sveltekit.",
-	"version": "2.0.0",
-
+	"description": "Visual Programming Language built on sveltekit.",
+	"version": "2.0.1",
 	"keywords": [],
-  "author": "",
-  "license": "ISC",
-
+	"author": "",
+	"license": "ISC",
 	"scripts": {
 		"save": "git add .; git commit -m 'New Release'; git push; npm version patch; npm publish; git push;",
 		"migration": "knex migrate:latest",
@@ -17,11 +15,9 @@
 		"lint": "prettier --plugin-search-dir . --check .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
-
 	"workspaces": [
 		"packages/test"
 	],
-
 	"devDependencies": {
 		"@fontsource/fira-mono": "^4.5.10",
 		"@neoconfetti/svelte": "^1.0.0",

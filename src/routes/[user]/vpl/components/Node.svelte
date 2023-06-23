@@ -19,6 +19,8 @@
   const {x,y,z} = translate;
 
   export let node;
+  $: console.log({node});
+
 
   const outputs = [];
   const inputs = [];
@@ -49,7 +51,7 @@
 
   let root = {};
 
-  const { name, left, top } = node;
+  const { name, left, top, input, output } = node;
   let registered = {};
 
   function destroy(){
@@ -134,38 +136,42 @@
     {JSON.stringify(node)}
 
 
-
-
-
-
-
-
-    <!-- NOPE A NODE HAS NO INOPUTSS ONLY Edges that are connected to it via parent propery, those edges may lead no nodes of OUTPUT type -->
-    {#each node.outputs as anchor (anchor.id)}
-      <div class="row g-0 ">
-        <div class="col-11">
-          <div class="card-body d-flex align-items-center justify-content-end">
-            <h6 class="card-title">{anchor.name}</h6>
+    {#if $output}
+      <!-- NOPE A NODE HAS NO INOPUTSS ONLY Edges that are connected to it via parent propery, those edges may lead no nodes of OUTPUT type -->
+      {#each $output as anchor (anchor.id)}
+        <div class="row g-0 ">
+          <div class="col-11">
+            <div class="card-body d-flex align-items-center justify-content-end">
+              <h6 class="card-title">{anchor.name}</h6>
+            </div>
+          </div>
+          <div class="col-1 d-flex align-items-center flex-row-reverse">
+            <i data-node={node.id} data-anchor={anchor.id} class="anchor-point bi bi-arrow-right-circle-fill text-success fs-4" use:register={anchor} use:pullable={{type: 'output', data:{vertex:{}, link:{}}, node, anchor, translate}}></i>
           </div>
         </div>
-        <div class="col-1 d-flex align-items-center flex-row-reverse">
-          <i data-node={node.id} data-anchor={anchor.id} class="anchor-point bi bi-arrow-right-circle-fill text-success fs-4" use:register={anchor} use:pullable={{type: 'output', data:{vertex:{}, link:{}}, node, anchor, translate}}></i>
-        </div>
-      </div>
-    {/each}
-    <!-- NOPE A NODE HAS NO INOPUTSS ONLY Edges that are connected to it via parent propery, those edges may lead no nodes of INPUT type -->
-    {#each node.inputs as anchor (anchor.id)}
-      <div class="row g-0">
-        <div class="col-1">
-          <i data-node={node.id} data-anchor={anchor.id} class="anchor-point bi bi-arrow-right-square-fill text-info fs-4" use:register={anchor} use:pullable={{type: 'input', data:{vertex:{}, link:{}}, node, anchor, translate}}></i>
-        </div>
-        <div class="col-11 m-0">
-          <div class="card-body p-0">
-            <h5 class="card-title p-1">{anchor.name}</h5>
+      {/each}
+    {/if}
+
+    {#if $input}
+      <!-- NOPE A NODE HAS NO INOPUTSS ONLY Edges that are connected to it via parent propery, those edges may lead no nodes of INPUT type -->
+      {#each $input as anchor (anchor.id)}
+        <div class="row g-0">
+          <div class="col-1">
+            <i data-node={node.id} data-anchor={anchor.id} class="anchor-point bi bi-arrow-right-square-fill text-info fs-4" use:register={anchor} use:pullable={{type: 'input', data:{vertex:{}, link:{}}, node, anchor, translate}}></i>
+          </div>
+          <div class="col-11 m-0">
+            <div class="card-body p-0">
+              <h5 class="card-title p-1">{anchor.name}</h5>
+            </div>
           </div>
         </div>
-      </div>
-    {/each}
+      {/each}
+    {/if}
+
+
+
+
+
 
     {#each tests as anchor (anchor.id)}
     <div class="row g-0">

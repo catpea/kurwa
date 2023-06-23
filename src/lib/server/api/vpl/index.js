@@ -3,6 +3,7 @@ import { camelCase } from 'lodash-es';
 import metadata from './metadata.json';
 
 import root from './root/index.js';
+import node from './node/index.js';
 import all from './all/index.js';
 import list from './list/index.js';
 import create from './create/index.js';
@@ -25,6 +26,9 @@ class Vpl {
 
 	get root() {
 		return root;
+	}
+	get node() {
+		return node;
 	}
 	get all() {
 		return all;

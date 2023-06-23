@@ -1,0 +1,10 @@
+[
+  {
+    "name": "parent",
+    "variable": "string",
+    "control": "string",
+    "description": "Parent id, that contains all the items to be listed.",
+    "required": true,
+    "validator": "Alphanumeric"
+  }
+]

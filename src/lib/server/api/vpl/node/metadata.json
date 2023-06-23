@@ -1,0 +1,6 @@
+{
+  "icon": "octagon",
+	"name": "root",
+	"description": "Fetch node from database.",
+	"version": "0.0.1"
+}

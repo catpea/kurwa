@@ -1,5 +1,7 @@
 # Kurwa (Curves) - A Visual Programming Language
 
+![screenshot.png](screenshot.png)
+
 This is the initial release, the database is still under construction,
 a great deal of work is needed for the UI, but the geometry work is mostly OK.
 

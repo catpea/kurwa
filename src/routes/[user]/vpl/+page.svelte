@@ -6,12 +6,7 @@
 	import { readable, writable, get } from 'svelte/store';
 	import { cloneDeep, flatten } from 'lodash-es';
 
-	import View from './containers/View.svelte'; // a view of nodes
-	import Source from '$lib/ui/Source.svelte'; // a view of nodes
-	import Message from '$lib/ui/Message.svelte'; // a view of nodes
-
-	import Workspace from './containers/Workspace.svelte';
-	import {bus} from './lib/stores.js';
+	import Workspace from '$lib/ui/vpl/Workspace.svelte';
 
   const location = writable(1);
 
@@ -423,81 +418,81 @@
 
 
 
-
-	// ELIMINARRRRRRRR THIS DOEN NOT BELONG HERE WORRKSPACE ISS NOW RESPONSIBLE FOR LOADING NODES
-	const nodes = [
-
-		{ id: 'q',   name: writable('Grand Parent'), left:writable(101),  top: writable(111),
-			outputs:[
-				{id:'z', name:'in', top:writable(0), left:writable(0)},
-		  ],
-			inputs:[
-				{id:'x', name:'out',   top:writable(0), left:writable(0)},
-				{id:'c', name:'color', top:writable(0), left:writable(0)}
-		  ],
-		},
-
-		{ id: 'w',  name: writable('Parent 1'), left:writable(501), top: writable(222),
-		  outputs:[
-				{id:'v', name:'in', top:writable(0), left:writable(0)},
-			],
-			inputs:[
-				{id:'b', name:'out',   top:writable(0), left:writable(0)},
-			],
-		},
-
- 	];
-	// ELIMINARRRRRRRR THIS DOEN NOT BELONG HERE WORRKSPACE ISS NOW RESPONSIBLE FOR LOADING NODES
-  const edges = [
-		{id:'a',  source:'q', output:'z',  destination:'w', input:'b', color:"gold", instance:false },
-
-  ];
-
-	function spice(){
-		edges.forEach(edge => {
-			if(edge.instance){
-				// noop
-			}else{
-				edge.source = nodes.find(o=>o.id==edge.source);
-				edge.destination = nodes.find(o=>o.id==edge.destination);
-				edge.output = edge.source.outputs.find(o=>o.id==edge.output);
-				edge.input = edge.destination.inputs.find(o=>o.id==edge.input);
-				edge.color = writable(edge.color);
-				edge.instance = true;
-			}
-		});
-	}
-	spice();
-
-
-	const actions = {
-
-		create(node){
-			 //console.log(`Created node!!!!!!`, node);
-			nodes.push(node);
-			nodes.c++
-		},
-		destroy(id){
-			const connections = edges.filter(o=>o.source.id==id||o.destination.id==id);
-
-			connections.forEach(({id})=>edges.splice(edges.findIndex(o=>o.id==id), 1));
-			const index = nodes.findIndex(o=>o.id==id)
-			nodes.splice(index,1);
-			nodes.c++;
-			edges.c++;
-		},
-		disconnect(id){
-			const index = edges.findIndex(o=>o.id==id)
-			edges.splice(index,1);
-			edges.c++;
-		},
-		connect(connection){
-			 //console.log({connection:cloneDeep(connection)});
-			edges.push(connection)
-			edges.c++;
-			spice();
-		},
-	};
+	//
+	// // ELIMINARRRRRRRR THIS DOEN NOT BELONG HERE WORRKSPACE ISS NOW RESPONSIBLE FOR LOADING NODES
+	// const nodes = [
+	//
+	// 	{ id: 'q',   name: writable('Grand Parent'), left:writable(101),  top: writable(111),
+	// 		outputs:[
+	// 			{id:'z', name:'in', top:writable(0), left:writable(0)},
+	// 	  ],
+	// 		inputs:[
+	// 			{id:'x', name:'out',   top:writable(0), left:writable(0)},
+	// 			{id:'c', name:'color', top:writable(0), left:writable(0)}
+	// 	  ],
+	// 	},
+	//
+	// 	{ id: 'w',  name: writable('Parent 1'), left:writable(501), top: writable(222),
+	// 	  outputs:[
+	// 			{id:'v', name:'in', top:writable(0), left:writable(0)},
+	// 		],
+	// 		inputs:[
+	// 			{id:'b', name:'out',   top:writable(0), left:writable(0)},
+	// 		],
+	// 	},
+	//
+ 	// ];
+	// // ELIMINARRRRRRRR THIS DOEN NOT BELONG HERE WORRKSPACE ISS NOW RESPONSIBLE FOR LOADING NODES
+  // const edges = [
+	// 	{id:'a',  source:'q', output:'z',  destination:'w', input:'b', color:"gold", instance:false },
+	//
+  // ];
+	//
+	// function spice(){
+	// 	edges.forEach(edge => {
+	// 		if(edge.instance){
+	// 			// noop
+	// 		}else{
+	// 			edge.source = nodes.find(o=>o.id==edge.source);
+	// 			edge.destination = nodes.find(o=>o.id==edge.destination);
+	// 			edge.output = edge.source.outputs.find(o=>o.id==edge.output);
+	// 			edge.input = edge.destination.inputs.find(o=>o.id==edge.input);
+	// 			edge.color = writable(edge.color);
+	// 			edge.instance = true;
+	// 		}
+	// 	});
+	// }
+	// spice();
+	//
+	//
+	// const actions = {
+	//
+	// 	create(node){
+	// 		 //console.log(`Created node!!!!!!`, node);
+	// 		nodes.push(node);
+	// 		nodes.c++
+	// 	},
+	// 	destroy(id){
+	// 		const connections = edges.filter(o=>o.source.id==id||o.destination.id==id);
+	//
+	// 		connections.forEach(({id})=>edges.splice(edges.findIndex(o=>o.id==id), 1));
+	// 		const index = nodes.findIndex(o=>o.id==id)
+	// 		nodes.splice(index,1);
+	// 		nodes.c++;
+	// 		edges.c++;
+	// 	},
+	// 	disconnect(id){
+	// 		const index = edges.findIndex(o=>o.id==id)
+	// 		edges.splice(index,1);
+	// 		edges.c++;
+	// 	},
+	// 	connect(connection){
+	// 		 //console.log({connection:cloneDeep(connection)});
+	// 		edges.push(connection)
+	// 		edges.c++;
+	// 		spice();
+	// 	},
+	// };
 
 	onMount(async () => {
 		const {id} = await system.root();
@@ -515,19 +510,4 @@
 	<meta name="description" content="A Visual Programming Language" />
 </svelte:head>
 
-
-<div class="container-fluid p-5">
-	<div class="row g-0">
-		<div class="col g-0 border-end border-dark">
-			<View location={writable(1)} z={writable(1.5)}/>
-		</div>
-		<div class="col g-0">
-			<View location={writable(1)} z={writable(0.2)}/>
-		</div>
-	</div>
-	<div class="row border-top border-dark">
-		<div class="col g-0">
-			<View location={writable(1)} z={writable(0.69)}/>
-		</div>
-	</div>
-</div>
+<Workspace initial="commander"/>

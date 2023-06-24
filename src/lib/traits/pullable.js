@@ -5,8 +5,7 @@
 import {first} from 'lodash-es';
 import { v4 as guid } from 'uuid';
 import { get, writable } from 'svelte/store';
-import {Base} from '../../lib/Base.js';
-import {bus} from '../../lib/stores.js';
+import {Base} from './Base.js';
 export const pulline =  { active:writable(false), x1:writable(0), y1:writable(0), x2:writable(0), y2:writable(0) } ;
 
 class Pullable extends Base {
@@ -21,7 +20,7 @@ class Pullable extends Base {
   clientX = 0;
   clientY = 0;
 
-  constructor({element, node, anchor, type, translate}){
+  constructor({element, node, anchor, type, translate, system}){
     super()
     this.element = element;
     this.node = node;
@@ -75,7 +74,7 @@ class Pullable extends Base {
         {id:guid(), name:'color', top:writable(0), left:writable(0)}
       ],
     };
-    if(createChild) bus.set(['create', child]);
+    if(createChild) system.create(child);
 
 setTimeout(()=>{
   // without this the connecting line is not aware of position of node element, assumes it is 0,
@@ -91,7 +90,7 @@ setTimeout(()=>{
           input: child.inputs[0].id,
           color: 'red',
         };
-        bus.set(['connect', connection]);
+        system.connect(connection);
       }else{
         const connection = {
           id:guid(),
@@ -101,7 +100,7 @@ setTimeout(()=>{
           output: child.outputs[0].id,
           color: 'red',
         };
-        bus.set(['connect', connection]);
+        system.connect(connection);
       }
     }else{
 
@@ -122,7 +121,7 @@ setTimeout(()=>{
             input,
             color: 'red',
           };
-          bus.set(['connect', connection]);
+          system.connect(connection);
         }else{
           const source = nodeId;
           const output = anchorId;
@@ -134,7 +133,7 @@ setTimeout(()=>{
             output,
             color: 'red',
           };
-          bus.set(['connect', connection]);
+          system.connect(connection);
         }
       }
     }

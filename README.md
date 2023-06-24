@@ -5,6 +5,10 @@
 This is the initial release, the database is still under construction,
 a great deal of work is needed for the UI, but the geometry work is mostly OK.
 
+## TLDR;
+
+- Requires a desktop display, mobile is too small for serious work.
+
 ## Rebuilding Database
 
 rm database.db

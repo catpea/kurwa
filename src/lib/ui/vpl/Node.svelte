@@ -4,8 +4,8 @@
   import { v4 as guid } from 'uuid';
 
   import Value from '$lib/ui/Value.svelte';
-  import {draggable} from './traits/draggable.js';
-  import {pullable} from './traits/pullable.js';
+  import {draggable} from '$lib/traits/draggable.js';
+  import {pullable} from '$lib/traits/pullable.js';
 
   import { writable, get } from 'svelte/store';
 

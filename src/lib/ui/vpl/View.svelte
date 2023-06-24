@@ -5,11 +5,12 @@ import { v4 as guid } from 'uuid';
 import Panzoom from '@panzoom/panzoom'
 import { onMount,onDestroy,  hasContext,getContext,setContext } from 'svelte';
 import { writable, get } from 'svelte/store';
+
 import Value from '$lib/ui/Value.svelte';
 import Source from '$lib/ui/Source.svelte';
-import Node from '../components/Node.svelte';
-import Anchor from '../components/Anchor.svelte';
-import {pulline} from '../components/traits/pullable.js';
+import Node from '$lib/ui/vpl/Node.svelte';
+import Anchor from '$lib/ui/vpl/Anchor.svelte';
+import {pulline} from '$lib/traits/pullable.js';
 
 let unsubscribe = [];
 

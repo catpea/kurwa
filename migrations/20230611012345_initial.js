@@ -62,9 +62,9 @@ export function up(knex) {
 
     // NODE SPECIFIC
     // geometric position and z-index for selecting
-    table.string('x');
-    table.string('y');
-    table.string('z');
+    table.string('top');
+    table.string('left');
+    table.string('order');
 
     // JSON: list of inputs and outputs, this eliminates additional queries and allows editing via built-in code editor
     table.string('input');

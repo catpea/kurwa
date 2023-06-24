@@ -82,7 +82,7 @@
 					schema: sourceSchema(),
 					states: [
 						{ name: 'initial', title:'initial', description: '', properties: {language:"javascript", value:"//NOTE: this is just a comment."} },
-						{ name: 'javascript-console-log', title:'JavaScript console.log', description: '', properties: {language:"javascript", value: "console.log('Hello World');" } },
+						{ name: 'javascript-console-log', title:'JavaScript  //console.log', description: '', properties: {language:"javascript", value: " //console.log('Hello World');" } },
 						{ name: 'javascript-function', title:'JavaScript function(){}', description: '', properties: {language:"javascript", value: 'function main(x){return x;}' } },
 						{ name: 'json', title:'JSON Object', description: '', properties: { language:"json", value: '{"string":"Hello World", "number":42, "boolean":false}' } },
 						{ name: 'xml', title:'XML Node', description: '', properties: { language:"xml", value: '<goodbye cruel="true">world</goodbye>' } },

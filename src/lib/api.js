@@ -5,8 +5,8 @@ async function execute({category, action, input}){
   const response = await fetch('/administrator/api?/api', { method: 'POST', body: JSON.stringify(request) });
   const result = deserialize(await response.text());
 
-  console.log({request});
-  console.log({result});
+   //console.log({request});
+   //console.log({result});
   return result;
 }
 

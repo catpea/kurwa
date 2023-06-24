@@ -8,7 +8,7 @@
 		const dropdown = new Dropdown(node);
 	}
 
-	//console.log($page);
+	// //console.log($page);
 	$: locator = $page?.route?.id || "";
 
 </script>

@@ -37,7 +37,7 @@ class Pullable extends Base {
   }
   destroy(){
     this.off('mousedown: primary');
-    console.log(`${this.description} destroyed! Exiting with ${this.destructors.length} listerenrs left.`);
+     //console.log(`${this.description} destroyed! Exiting with ${this.destructors.length} listerenrs left.`);
     if(this.destructors.length) console.error(`lol, ${this.description} has memory leaks now.`);
   }
 
@@ -169,7 +169,7 @@ setTimeout(()=>{
 
 
 export function pullable(element, options){
-  console.log({options});
+   //console.log({options});
   const operation = new Pullable({element, ...options});
   return {
 		destroy() {

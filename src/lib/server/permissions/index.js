@@ -8,7 +8,7 @@ class Acl {
     this.abilities = abilities;
     this.actors = actors;
     this.permissionChart = this.resolveAbilities();
-    //console.log(this.permissionChart);
+    // //console.log(this.permissionChart);
   }
   resolveAbilities(){
     const chart = {};

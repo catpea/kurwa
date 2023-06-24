@@ -19,7 +19,7 @@
 
     const payload = { category, action, input };
 
-    console.log({payload});
+     //console.log({payload});
     dispatch('request', payload)
 
     const response = await fetch(this.action, {
@@ -28,15 +28,15 @@
     });
 
     const result = deserialize(await response.text());
-    console.log({result});
+     //console.log({result});
     dispatch('result', result)
   }
 
-  console.log(validators);
-  console.log( flatten([ 'Alphanumeric' ]).map(name=>validators[name]) );
-  console.log( flatten([ 'Alphanumeric' ]).map(name=>validators[name]).every(v=>{
+   //console.log(validators);
+   //console.log( flatten([ 'Alphanumeric' ]).map(name=>validators[name]) );
+   //console.log( flatten([ 'Alphanumeric' ]).map(name=>validators[name]).every(v=>{
     const result = v( "abc");
-    console.log(v, result);
+     //console.log(v, result);
 
     return result;
 }) );

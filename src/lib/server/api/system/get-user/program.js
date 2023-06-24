@@ -6,7 +6,7 @@ import { SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from '$lib/code.js';
 export default async function getUser(username){
   const user = await User.query().where({username: this.user.username}).first();
   const packet = pick(user, ['name', 'username', 'company', 'position', 'email']);
-  console.log({packet});
+   //console.log({packet});
   packet.kind = 'user';
   return [packet];
 }

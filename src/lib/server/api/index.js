@@ -43,10 +43,10 @@ class Api {
   async permits(user, category, action) {
     const context = {user};
     const complaints = [];
-    //console.log('permits', category, action, this[category]);
+    // //console.log('permits', category, action, this[category]);
     for (const permission of this[category][camelCase(action)].permissions) {
       const access = await permissions.allow(user, permission);
-      //console.log({access});
+      // //console.log({access});
       if(access.denied){
         complaints.push( flash(`Permission Failue: ${access.title}`, `User permission system stopped execution of unauthorized packet. ${access.message}`, 'danger') );
       }
@@ -81,7 +81,7 @@ class Api {
 
   async execute(user, category, action, input) {
     const context = {user};
-    //console.log('this[category][action]', this[category][action]);
+    // //console.log('this[category][action]', this[category][action]);
     return this[category][camelCase(action)].program.bind(context)(...input);
   }
 
@@ -102,12 +102,12 @@ class Api {
 export function reflect(){
   const api = new Api();
   const response = { categories: [], actions: [], permissions: [], rules: [], schema: [], tests: [], }
-  //console.log('api.categories',api.categories);
+  // //console.log('api.categories',api.categories);
   for (const category of api.categories) {
     response.categories.push(api[category].metadata);
-    //console.log('api[category].actions', category, api[category].actions);
+    // //console.log('api[category].actions', category, api[category].actions);
     for (const action of api[category].actions) {
-      //console.log({action});
+      // //console.log({action});
       response.actions.push({ category:api[category].metadata, action: api[category][action].metadata })
       response.permissions.push({category:api[category].metadata.name, action:api[category][action].metadata.name, data:api[category][action].permissions});
       response.rules.push({category:api[category].metadata.name, action:api[category][action].metadata.name, data:api[category][action].rules});
@@ -126,7 +126,7 @@ export async function execute({user, packet}){
   const categoryHasAction = api[category].has( action );
   const apiPermits = await api.permits(user, category, action);
   const apiValidates = await api.validates(user, category, action, input);
-  //console.log({hasCategory, categoryHasAction, apiPermits, apiValidates });
+  // //console.log({hasCategory, categoryHasAction, apiPermits, apiValidates });
 
   if( api.has( category ) && api[category].has( action ) && await api.permits(user, category, action) && await api.validates(user, category, action, input) ){
     return await api.execute(user, category, action, input);

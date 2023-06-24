@@ -14,7 +14,7 @@
 	if (browser){
 		if (form){
 			if(form.code == SIGN_IN_SUCCESS){
-				console.log('form.user',form.user);
+				 //console.log('form.user',form.user);
 
 				user.set(form.user);
 				//goto('/');

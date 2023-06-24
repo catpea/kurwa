@@ -1,4 +1,5 @@
 <script>
+import {cloneDeep} from "lodash-es";
 
 import { v4 as guid } from 'uuid';
 import Panzoom from '@panzoom/panzoom'
@@ -32,13 +33,7 @@ onMount(() => {
 
     parent = await system.node($location);
     nodes = await system.list($location);
-    console.log('parent.edges', parent.edges)
-    console.log('get(parent.edges)', get(parent.edges))
-    edges = get(parent.edges);
-
-    console.log({parent});
-    console.log({nodes});
-    console.log({edges});
+    edges = parent.edges;
 
   }))
 });

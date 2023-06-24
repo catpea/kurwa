@@ -14,7 +14,10 @@
   },
   "homepage": "https://github.com/catpea/kurwa#readme",
   "scripts": {
+    "migration": "knex migrate:latest",
+		"seed": "knex seed:run",
     "save": "git add .; git commit -m 'New Release'; git push; npm version patch; npm publish; git push;",
+    "reset": "rm database.db; npm run migration; npm run seed;",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview"

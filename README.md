@@ -35,3 +35,10 @@ You can preview the production build with `npm run preview`.
 ## News
 
 Upgrades To Svelte @latest
+
+## TODO
++ parent needs edges data for the two test nodes
++ pullable needs work, get it upgraded and clean
++ make edges work with database version of nodes
++ next steps, create/save new nodes by dblclicks
++ and then, add the enter node feature for edits

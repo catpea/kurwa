@@ -34,7 +34,7 @@ export function draggable(node, options){
   );
 
   const subscription = mouseDragging$.subscribe(event => {
-    console.log('mouseDragging$', event);
+     //console.log('mouseDragging$', event);
     options.left.set( event.valueX );
     options.top.set( event.valueY );
   });

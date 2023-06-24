@@ -12,7 +12,7 @@
 	import { deserialize } from '$app/forms';
 
 	export let data;
-	console.log({data});
+	 //console.log({data});
 
 
 	let selectedComponent = {}; // @hmr:keep

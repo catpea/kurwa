@@ -3,7 +3,7 @@
 	import api from '$lib/api.js';
 
 	import { onMount,onDestroy,  beforeUpdate,afterUpdate,  hasContext,getContext,setContext } from 'svelte';
-	import { writable, get } from 'svelte/store';
+	import { readable, writable, get } from 'svelte/store';
 	import { cloneDeep, flatten } from 'lodash-es';
 
 	import View from './containers/View.svelte'; // a view of nodes
@@ -13,25 +13,56 @@
 	import Workspace from './containers/Workspace.svelte';
 	import {bus} from './lib/stores.js';
 
-	// if (import.meta.hot) {
- //   import.meta.hot.dispose(data => {
- //     console.log(`do cleanup!`);
- //   })
- //   import.meta.hot.accept(() => {
- //     console.log(`adjust side effects!`);
-	// 	 // window.location = window.location.href;
- //   })
- // }
+  const location = writable(1);
 
-
- const location = writable(1);
+	const writableHandler = {
+		get({node, keys}, prop, receiver) {
+			if (keys.includes(prop)) {
+				const keyword = '$';
+				const surrogate = prop+keyword;
+				const descriptor = node.descriptor(prop);
+				const readonly = descriptor.set===undefined;
+				const isSurrogate = prop.endsWith(keyword);
+		    if(isSurrogate) return node[surrogate];
+		 		const kind = readonly?readable:writable;
+				if(readonly) console.log(`Node ${prop} is read only.`);
+			  if(!node[surrogate]) node[surrogate] = kind( node[prop] );
+				const handler = value => { console.log(`UN-THROTTLED: Updated ${prop} of node.id=${node.id} to:`, value); node[prop]=value; };
+			  if(!readonly) node.destructible(node[surrogate].subscribe(handler));
+		  	return node[surrogate];
+	  	}
+		}
+	}
 
 	class Node {
-		#pojo;
+
+		#pojo = {};
+
 		async load(pojo){
+			//NOTE: you can upgrade edges from here to use a database but that would be inefficient (ie you can use await in this method)
 			this.#pojo = pojo;
 		}
 
+		unsubscribe=[];
+
+		destructible(trash){
+			this.unsubscribe.push(trash);
+		}
+		destroy(){
+    	this.unsubscribe.map(o=>o())
+		}
+		descriptor(property){
+			return Object.getOwnPropertyDescriptor(Object.getPrototypeOf(this), property);
+		}
+
+		get writable() {
+			return new Proxy({node: this, keys:Object.keys(this.#pojo)}, writableHandler);
+		}
+		get state(){
+			return cloneDeep(this.#pojo);
+		}
+
+		//////////////////////////////////////////////////////////////////////////////////////
 
 		get id(){
 			return this.#pojo.id;
@@ -132,51 +163,64 @@
 
 
 
-		get x(){
-			return this.#pojo.x;
+		get left(){
+			return this.#pojo.left;
 		}
-		set x(value){
+		set left(value){
 			//TODO: verify
-			this.#pojo.x = value;
+			this.#pojo.left = value;
 		}
 
 
 
-		get y(){
-			return this.#pojo.y;
+		get top(){
+			return this.#pojo.top;
 		}
-		set y(value){
+		set top(value){
 			//TODO: verify
-			this.#pojo.y = value;
+			this.#pojo.top = value;
 		}
 
 
 
-		get z(){
-			return this.#pojo.z;
+		get order(){
+			return this.#pojo.order;
 		}
-		set z(value){
+		set order(value){
 			//TODO: verify
-			this.#pojo.z = value;
+			this.#pojo.order = value;
 		}
 
 
 		get input(){
- 			return JSON.parse(this.#pojo.input||'[]');
+			const data = JSON.parse(this.#pojo.input||'[]');
+			data.forEach(o=>o.top=writable(o.top))
+			data.forEach(o=>o.left=writable(o.left))
+			console.log('RETURNING INPOUT', data);
+ 			return data;
  		}
  		set input(value){
- 			//TODO: verify
- 			this.#pojo.input = JSON.stringify(value);
+			const clean = cloneDeep(value);
+			clean.forEach(o=>o.top=get(o.top))
+			clean.forEach(o=>o.left=get(o.left))
+ 			this.#pojo.input = JSON.stringify(clean);
+			console.log('SET input', this.#pojo.input);
  		}
-
-
 		get output(){
- 			return JSON.parse(this.#pojo.output||'[]');
+			const data = JSON.parse(this.#pojo.output||'[]');
+			data.forEach(o=>o.top=writable(o.top))
+			data.forEach(o=>o.left=writable(o.left))
+ 			return data;
  		}
  		set output(value){
- 			//TODO: verify
- 			this.#pojo.output = JSON.stringify(value);
+			const clean = cloneDeep(value);
+			clean.forEach(o=>o.top=get(o.top))
+			clean.forEach(o=>o.left=get(o.left))
+ 			this.#pojo.output = JSON.stringify(clean);
+			console.log('SET output', this.#pojo.output);
  		}
+
+
 
 
 		get properties(){
@@ -196,13 +240,43 @@
  			this.#pojo.values = JSON.stringify(value);
  		}
 
+
+
+
+
+
+
 		get edges(){
- 			return JSON.parse(this.#pojo.edges||'[]');
+			// {id:'a',  source:'q', output:'z',  destination:'w', input:'b', color:"gold", instance:false }
+			// const data = JSON.parse(this.#pojo.edges||'[]');
+			// data.forEach(edge => {
+
+			// thse will need system.node()
+			// 	edge.source = nodes.find(o=>o.id==edge.source);
+			// 	edge.destination = nodes.find(o=>o.id==edge.destination);
+
+			// anchor id
+			// 	edge.output = edge.source.outputs.find(o=>o.id==edge.output);
+			// 	edge.input = edge.destination.inputs.find(o=>o.id==edge.input);
+
+			// 	edge.color = writable(edge.color);
+			// }
+ 			return [];
  		}
+
  		set edges(value){
  			//TODO: verify
  			this.#pojo.edges = JSON.stringify(value);
  		}
+
+
+
+
+
+
+
+
+
 
 
 		get extends(){
@@ -242,41 +316,18 @@
 
 	}
 
-
-
-	const writableHandler = {
-	  get(node, prop, receiver) {
-			console.log('REQUEST', {prop});
-
-	    if (prop in node) {
-				console.log('VALUE', {prop, value: node[prop]});
-				if(!node[prop+'Writable']) node[prop+'Writable'] = writable( node[prop] );
-	      return node[prop+'Writable'];
-	    }
-			// else if (prop === 'then') {
-	    //   return null; // caused by interaction with promises
-	    // }
-			//  else {
-	    //   return (args) => obj.send(prop, args);
-	    // }
-
-	  }
-	}
-
 	class System {
-
-		#instances = {}
-
+		cache = {}
 		async hydrate(pojo){
-
-			if(!this.#instances[pojo.id]){
-				this.#instances[pojo.id] = new Node();
-				await this.#instances[pojo.id].load(pojo);
+			const miss = this.cache[pojo.id]===undefined;
+			if(miss){
+				this.cache[pojo.id] = new Node();
+				await this.cache[pojo.id].load(pojo);
 			}
-
-			const writableProxy = new Proxy(this.#instances[pojo.id], writableHandler);
-			return writableProxy;
+			return this.cache[pojo.id];
 		}
+
+
 
 		async root(){
 			const node = (await api.vpl.root()).data.find(o=>o.kind=="node")?.data;
@@ -285,8 +336,8 @@
 		async node(id){
 			const node = (await api.vpl.node(id)).data.find(o=>o.kind=="node")?.data;
 			return await this.hydrate(node);
-
 		}
+
 		async all(){
 			const nodes = (await api.vpl.all()).data.find( (o) => o.kind == "nodes" )?.data;
 			return await Promise.all( nodes.map(async node=>await this.hydrate(node)) );
@@ -295,6 +346,18 @@
 			const nodes = (await api.vpl.list(parent)).data.find( (o) => o.kind == "nodes" )?.data;
 			return await Promise.all( nodes.map(async node=>await this.hydrate(node)) );
 		}
+
+
+
+
+
+
+		async destroy(id){
+			const result = await api.vpl.destroy(id);
+			console.log({result});
+
+		}
+
 
 		//
 		// async nodes(parent){
@@ -352,23 +415,13 @@
 	// pass this down into all components
 	const system = new System();
 	setContext('system', system);
+	setContext('debug', false);
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-	setContext('bus', bus);
-	setContext('debug', true);
 
 
 	// ELIMINARRRRRRRR THIS DOEN NOT BELONG HERE WORRKSPACE ISS NOW RESPONSIBLE FOR LOADING NODES
@@ -420,7 +473,7 @@
 	const actions = {
 
 		create(node){
-			console.log(`Created node!!!!!!`, node);
+			 //console.log(`Created node!!!!!!`, node);
 			nodes.push(node);
 			nodes.c++
 		},
@@ -439,35 +492,20 @@
 			edges.c++;
 		},
 		connect(connection){
-			console.log({connection:cloneDeep(connection)});
+			 //console.log({connection:cloneDeep(connection)});
 			edges.push(connection)
 			edges.c++;
 			spice();
 		},
 	};
 
-	const stop = bus.subscribe(([name, parameters]) => {
-		//console.log({name, parameters});
-		//actions[name]?actions[name](parameters):0;
-	});
-
-	beforeUpdate(() => {
-		console.info('beforeUpdate: the component is about to update');
-	});
-
 	onMount(async () => {
 		const {id} = await system.root();
-		$location = get(id);
+		$location = id;
 	});
 
 	onDestroy(() => {
 		console.info('DESTROY!');
-		stop()
-
-	});
-
-	afterUpdate(() => {
-		console.info('afterUpdate: the component just updated');
 	});
 
 </script>
@@ -484,59 +522,12 @@
 			<View location={writable(1)} z={writable(1.5)}/>
 		</div>
 		<div class="col g-0">
-			<Workspace {nodes} {edges} {location} scale={writable(0.2)}/>
+			<View location={writable(1)} z={writable(0.2)}/>
 		</div>
 	</div>
 	<div class="row border-top border-dark">
 		<div class="col g-0">
-			<Workspace {nodes} {edges} {location} scale={writable(.72)}/>
-		</div>
-	</div>
-	<div class="row mb-5">
-		<div class="col-3 text-info">
-			<div class="p-2 rounded border border-dark" style="min-height: 50rem;">
-			...
-			</div>
-		</div>
-		<div class="col-9 text-info">
-			<div class="p-2 rounded border border-dark" style="min-height: 50rem;">
-			...
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="container">
-	<div class="row">
-		<div class="col">
-				<h2>Understanding the Root Node</h2>
-
-				<Message title="Optimization" message="Root node is never rendered as an actual VPL node, because it is a placeholder (driver node to initialize  recursion)."/>
-
-				{#await system.root()}
-					<Message message="Waiting for root node..."/>
-				{:then value}
-					<Source language="json" value={JSON.stringify(value, null, 2)}/>
-				{:catch error}
-					<Message message="Something went wrong when loading the root node: {error.message}"/>
-				{/await}
-
-				<Message message="The main reason behind loading the root node, is to get it's ID, and set that as the initial VPL location. The location is now set to {$location}."/>
-
-				<Message message="Optimization: To load all nodes that belong to root, we must scan for nodes with parent set to the id of the root."/>
-
-				{#await system.all($location)}
-					<Message message="Waiting for root node..."/>
-				{:then value}
-					<Source language="json" value={JSON.stringify(value, null, 2)}/>
-				{:catch error}
-					<Message message="Something went wrong when loading nodes: {error.message}"/>
-				{/await}
-
-				<Message title="Crazy Optimization!" message=".edges property is NOT FOR THE NODE!!! it is for it's children! For the nodes inside it!"/>
-
-				<Message title="So, where are the edges?" message="If you need to load edges for your nodes, always look to the parent!"/>
+			<View location={writable(1)} z={writable(0.69)}/>
 		</div>
 	</div>
 </div>

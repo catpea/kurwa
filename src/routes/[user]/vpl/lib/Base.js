@@ -14,7 +14,7 @@ export class Base {
   }
   off(id){
     const clean = this.destructors.filter(o=>o.id==id);
-    console.log('cleaning', ...clean.map(o=>o.id));
+     //console.log('cleaning', ...clean.map(o=>o.id));
     clean.map(o=>o.destructor());
     this.destructors = [...this.destructors.filter(o=>o.id!==id)]
   }

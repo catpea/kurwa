@@ -6,5 +6,6 @@ import { SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from '$lib/code.js';
 export default async function node(id){
   const owner = this.user.id;
   const node = await Node.query().where({owner, id}).first();
+  console.log({node});
   return [{kind:'node', data:node.toJSON()}];
 }

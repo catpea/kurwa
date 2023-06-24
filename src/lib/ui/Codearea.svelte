@@ -72,7 +72,7 @@
 
         parser: "babel", plugins:[parserBabel] }).trim()
     }catch(e){
-      console.log(e);
+       //console.log(e);
     }
     return response;
   }

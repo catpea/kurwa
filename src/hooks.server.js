@@ -9,7 +9,7 @@ export async function handle({ event, resolve }) {
   // if (token) {
   //   const user = await account.getUser(token);
     event.locals.user = user.toJSON();
-    // console.log('event.locals.user', event.locals.user);
+    //  //console.log('event.locals.user', event.locals.user);
   // }else{
     // event.locals.user = {};
   // }

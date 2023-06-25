@@ -20,21 +20,19 @@
 </style>
 
 <main>
-
-<div class="container-fluid">
-	<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-lx-8 g-4">
-		{#each data.featured as [storefront,title,text], i}
-		  <div class="col">
-		    <div class="card">
-		      <div class="card-body">
-		        <h5 class="card-title">{title}</h5>
-		        <p class="card-text">{text}</p>
-						<a href="@{storefront}" class="btn btn-outline-primary"><i class="bi bi-cart4"></i> {storefront}</a>
-		      </div>
-		    </div>
-		  </div>
-		{/each}
+	<div class="container-fluid">
+		<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 row-cols-lx-8 g-4">
+			{#each data.featured as [storefront,title,text], i}
+			  <div class="col">
+			    <div class="card">
+			      <div class="card-body">
+			        <h5 class="card-title">{title}</h5>
+			        <p class="card-text">{text}</p>
+							<a href="@{storefront}" class="btn btn-outline-primary"><i class="bi bi-cart4"></i> {storefront}</a>
+			      </div>
+			    </div>
+			  </div>
+			{/each}
+		</div>
 	</div>
-</div>
-
 </main>

@@ -13,7 +13,7 @@
 
 </script>
 
-<nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary shadow ">
+<nav class="navbar navbar-expand-lg fixed-bottom bg-body-tertiary shadow ">
   <div class="container-fluid">
     <a class="navbar-brand text-warning" href="/"><i class="bi bi-bezier2"></i>Kurwa <sup class="text-danger">&beta;1</sup></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,6 @@
 
 <style>
 :global(body) {
-	padding-top: 5rem;
+	/* padding-top: 5rem; */
 }
 </style>

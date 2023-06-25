@@ -1,5 +1,6 @@
 <script>
 import {cloneDeep} from "lodash-es";
+import JSON5 from "json5";
 
 import { v4 as guid } from 'uuid';
 import Panzoom from '@panzoom/panzoom'
@@ -26,7 +27,7 @@ const {x,y} = translate;
 // NOTE: this only loads nodes and edges, the anchors are done within the node.
 let parent = {};
 let nodes = [];
-let edges = [];
+let edges;
 
 onMount(() => {
   unsubscribe.push(location.subscribe(async value=>{
@@ -34,10 +35,8 @@ onMount(() => {
 
     parent = await system.node($location);
     nodes = await system.list($location);
-    edges = parent.edges; // All the edges are stored in the parent.
-
-
-
+    edges = parent.writable.edges; // All the edges are stored in the parent.
+    console.log('EDGES', $edges);
 
   }))
 });
@@ -82,9 +81,26 @@ function panzoom(elem, options){
     translate.z.set(event.detail.scale);
   })
 
+
+
 }
 
+
+
+function fixCircularReferences() {
+  const defs={};
+  return (k,v) => {
+    const def = defs[v];
+    if (def && typeof(v) == 'object') return '['+k+' is the same as '+def+']';
+    defs[v]=k;
+    return v;
+  }
+}
 </script>
+
+{#if $edges}
+  {JSON5.stringify($edges, fixCircularReferences)}
+{/if}
 
 {#if $location}
   <div bind:this={node} class="panzoom-parent position-relative" style=" overflow: hidden; user-select: none; touch-action: none; cursor: move;">
@@ -121,9 +137,11 @@ function panzoom(elem, options){
             <Anchor color={writable("green")} x1={pulline.x1} y1={pulline.y1} x2={pulline.x2} y2={pulline.y2}  {translate} />
           {/if}
 
-          {#each edges as edge (edge.id)}
-            <Anchor color={edge.color} edge={edge.id} x1={edge.output.left} y1={edge.output.top} x2={edge.input.left} y2={edge.input.top} {translate} />
-          {/each}
+          {#if $edges}
+            {#each $edges as edge (edge.id)}
+              <Anchor color={edge.color} edge={edge.id} x1={edge.output.left} y1={edge.output.top} x2={edge.input.left} y2={edge.input.top} {translate} />
+            {/each}
+          {/if}
 
         </svg>
 

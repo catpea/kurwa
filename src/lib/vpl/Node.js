@@ -39,8 +39,14 @@ class Writables extends Pojo {
           const kind = readonly ? readable : writable;
           if (readonly) console.log(`Node ${prop} is read only.`);
           if (!node[surrogate]) node[surrogate] = kind(node[prop]);
-          const handler = (value) => { console.log( `UN-THROTTLED: Updated ${prop} of node.id=${node.id} to:`, value ); node[prop] = value; };
-          if (!readonly) node.destructible({ id: surrogate, destroy: node[surrogate].subscribe(handler), });
+
+
+
+          if (!readonly) node.destructible({ id: surrogate, destroy: node[surrogate].subscribe((value) => {
+            console.warn( `UN-THROTTLED WRITABLE UPDATE OPERATION`);
+            console.log( `Setting [${prop}] of [node.id=${node.id}] to:`, value );
+            node[prop] = value;
+          }), });
           if (!readonly) node.writables[prop] = node[surrogate];
           return node[surrogate];
         }
@@ -49,9 +55,15 @@ class Writables extends Pojo {
   }
 
   announce() {
-    Object.entries(this.#writables).forEach(([key, value]) => {
-      value.set(this[key]);
+
+    Object.entries(this.#writables).forEach(([propertyName, writableInstance]) => {
+      console.log( 'Announce attempt!', propertyName, );
+      const existingData = get(writableInstance);
+      const updatedData = this[propertyName]; // from geter which draws data based on updated pojo!
+      console.log( `Changing ${propertyName} Data From/To`, existingData,updatedData );
+      writableInstance.set( updatedData );
     });
+
   }
 
   unsubscribe = [];
@@ -212,19 +224,32 @@ export default class Node extends Writables {
 
 
 
-
-	#ioBuilder(json){
-		const data = JSON.parse(json);
-		data.forEach((o) => (o.top = writable(o.top)));
-		data.forEach((o) => (o.left = writable(o.left)));
-		return data;
+	#ioBuilder(json, existing=[]){
+		const master = JSON.parse(json);
+    master.forEach(anchor=>{
+      const located = existing.find(o=>o.id==anchor.id);
+      if(located){
+        anchor.top = located.top;
+        anchor.left = located.left;
+      }else{
+        anchor.top = writable(anchor.top);
+        anchor.left = writable(anchor.left);
+      }
+    })
+		return master;
 	}
 
 	#inputStructure = null;
   #outputStructure = null;
 
   get input() {
-		if(!this.#inputStructure) this.#inputStructure = this.#ioBuilder(this.pojo.input);
+		if(!this.#inputStructure){
+      // Create New
+      this.#inputStructure = this.#ioBuilder(this.pojo.input);
+    }else{
+      // Already Exists, update existing values based on pojo
+      this.#inputStructure = this.#ioBuilder(this.pojo.input, this.#inputStructure);
+    }
     return this.#inputStructure;
   }
   set input(value) {
@@ -236,8 +261,14 @@ export default class Node extends Writables {
   }
 
   get output() {
-		if(!this.#outputStructure) this.#outputStructure = this.#ioBuilder(this.pojo.output);
-		return this.#outputStructure;
+    if(!this.#outputStructure){
+      // Create New
+      this.#outputStructure = this.#ioBuilder(this.pojo.output);
+    }else{
+      // Already Exists, update existing values based on pojo
+      this.#outputStructure = this.#ioBuilder(this.pojo.output, this.#outputStructure);
+    }
+    return this.#outputStructure;
   }
   set output(value) {
     const clean = cloneDeep(value);

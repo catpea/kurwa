@@ -34,18 +34,9 @@
   let root = {}; // root element
   const { id, name, left, top, input, output } = node.writable; // auto-writables;
 
-
-
-    // 
-    // let { id, name, left, top, input, output } = node;
-    // node.monitor.subscribe(value=>{
-    //   id = node.id;
-    //   name = node.name;
-    //   left = node.left;
-    //   top = node.top;
-    //   input = node.input;
-    //   output = node.output;
-    // })
+  input.subscribe(value=>{
+    console.log('INPUT CHANGEDDDDDDDDDD!!!', value);
+  });
 
   let registered = {}; // anchor registration
 
@@ -101,14 +92,10 @@
 
 {#if node}
   <div bind:this={root} use:monitor={{update: payload}} class="card position-absolute shadow panzoom-exclude" use:draggable={{handle:'.card-header', left, top, translate}} style="left: {$left}px; top: {$top}px; width: 18rem; opacity: .75;">
-
     <div class="user-select-none card-header pe-1">
       {$name}
       <i on:click={()=>destroy($id)} class="bi bi-x-circle float-end"></i>
     </div>
-
-    Look up extends, and bring-in the properties from there.
-
     {#if $output}
       {#each $output as anchor (anchor.id)}
         <div class="row g-0 ">
@@ -123,7 +110,6 @@
         </div>
       {/each}
     {/if}
-
     {#if $input}
       {#each $input as anchor (anchor.id)}
         <div class="row g-0">
@@ -138,19 +124,5 @@
         </div>
       {/each}
     {/if}
-
-    {#each tests as anchor (anchor.id)}
-    <div class="row g-0">
-      <div class="col-1">
-        <i data-node={node.id} data-anchor={anchor.id} class="anchor-point bi bi-braces-asterisk fs-4" style="color: var(--bs-purple)" use:register={anchor} use:pullable={{type: 'output', node, anchor, translate}}></i>
-      </div>
-      <div class="col-11 m-0">
-        <div class="card-body p-0">
-          <h5 class="card-title p-1">{anchor.name} {anchor.type}</h5>
-        </div>
-      </div>
-    </div>
-    {/each}
-
   </div>
 {/if}

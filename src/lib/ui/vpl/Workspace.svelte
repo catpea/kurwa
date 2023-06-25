@@ -8,6 +8,7 @@
   import View from '$lib/ui/vpl/View.svelte'; // a view of nodes
   import Commander from '$lib/ui/commander/Commander.svelte'; // a view of nodes
   import Configuration from '$lib/ui/vpl/Configuration.svelte'; // a view of nodes
+  import Architecture from '$lib/ui/vpl/Architecture.svelte'; // a view of nodes
   import Source from '$lib/ui/Source.svelte'; // a view of nodes
   import Message from '$lib/ui/Message.svelte'; // a view of nodes
 
@@ -16,6 +17,7 @@
   const system = getContext('system');
 
   const tabs = [
+    {id:'architecture', name: 'Architecture', command:'architect',},
     {id:'editor', name: 'Editor', command:'edit',},
     {id:'commander', name: 'Commander', command:'command',},
     {id:'configuration', name: 'Configuration', command:'configure',},
@@ -26,6 +28,7 @@
    commander: {},
    configuration: {},
    '*': {
+     architect: 'architecture',
      edit: 'editor',
      command: 'commander',
      configure: 'configuration',
@@ -41,7 +44,7 @@
 
 {#if $location}
 
-  <div class="container-fluid">
+  <div class="container-fluid mt-1">
   	<div class="row border-dark border-bottom g-0">
   		<div class="col">
   			<ul class="nav nav-tabs">
@@ -76,6 +79,8 @@
     		</div>
     	</div>
     </div>
+  {:else if $state == 'architecture'}
+    <Architecture {location}/>
   {:else if $state == 'commander'}
     <Commander {location}/>
   {:else if $state == 'configuration'}

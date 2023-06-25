@@ -12,26 +12,30 @@ export default class System {
 
   constructor(){
     this.records.set( this.nodes );
+    this.records.subscribe(records=>console.log('Records have changed', records))
   }
 
   async hydrate(pojo){
+    // incoming server data...
     let response = null;
     const id = pojo.id;
-    const lookup = get(this.records);
-    const miss = lookup[id]===undefined;
+
+    const miss = this.nodes[id]===undefined;
+
     if(miss){
+      console.log('Pojo not in records.');
       const node = new Node(this.nodes);
       await node.load(pojo);
       response = node;
-      this.records.update(records=>{
-        records[id]=node;
-        return records;
-      });
+      this.nodes[id]=node;
+      this.records.set(this.nodes); // NOTE: ignored becasue old and new values are the same
     }else{
-      response = lookup[id];
+      console.log('Pojo existed in records.');
+      response = this.nodes[id];
       await response.load(pojo);
-      this.records.update(a=>a);
+      this.records.set(this.nodes); // NOTE: ignored becasue old and new values are the same
     }
+
     console.log(`Object ${response.id} has changed.`);
     return response;
   }
@@ -59,7 +63,9 @@ export default class System {
   }
 
   async patch(id, data){
+    console.log('sending patch to api.vpl.patch on server', id, data);
     const node = (await api.vpl.patch(id, data)).data.find(o=>o.kind=="node")?.data;
+    console.log('PATCH RETURNED POJO', node);
     return await this.hydrate(node);
   }
   async delete(id){

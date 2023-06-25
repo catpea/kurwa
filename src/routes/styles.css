@@ -10,10 +10,10 @@ body {
 
 
 .outline-none:focus-visible, .outline-none:focus {
-   outline:none;
-   outline-style: none;
-box-shadow: none;
-border-color: transparent;
+  outline:none;
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
 }
 
 

@@ -36,47 +36,41 @@
     // hydrate
     response.input =  JSON.parse(response.input);
     response.output = JSON.parse(response.output);
-
-
-
-
     response.edges =  JSON.parse(response.edges);
     response = JSON.stringify(response, null, 2);
-
     return response;
   }
 
   function toSaveable(data){
     if(!data) return null;
     try {
-    let response = JSON5.parse(data);
-    // DE-hydrate
-    response.input =  JSON.stringify(response.input);
-    response.output = JSON.stringify(response.output);
-    response.edges =  JSON.stringify(response.edges);
-    // changed only...
-    const changed = {};
-    const recent = selected.state;
-    for (const key in response) {
-      if (response.hasOwnProperty(key)) {
-        const value = response[key];
-        if(recent[key] === response[key]){
-          // no change
-        }else{
-          changed[key] = value;
+      let response = JSON5.parse(data);
+      // DE-hydrate
+      response.input =  JSON.stringify(response.input);
+      response.output = JSON.stringify(response.output);
+      response.edges =  JSON.stringify(response.edges);
+      // changed only...
+      const changed = {};
+      const recent = selected.state;
+      for (const key in response) {
+        if (response.hasOwnProperty(key)) {
+          const value = response[key];
+          if(recent[key] === response[key]){
+            // no change
+          }else{
+            changed[key] = value;
+          }
         }
       }
+      hasChanges = Object.keys(changed).length;
+      hasError = null;
+      response = JSON.stringify(changed, null, 2);
+      return response;
+    } catch(e){
+      console.error(e)
+      hasError = e.message;
+      return null;
     }
-    hasChanges = Object.keys(changed).length;
-    hasError = null;
-    response = JSON.stringify(changed, null, 2);
-    return response;
-  } catch(e){
-    console.error(e)
-    hasError = e.message;
-    return null;
-  }
-
   }
 
 </script>

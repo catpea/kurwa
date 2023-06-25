@@ -12,7 +12,6 @@ a great deal of work is needed for the UI, but the geometry work is mostly OK.
 Node commander, based on codemirror allows easy access and editing of all the nodes,
 data is saved to the local database via a secure api system.
 
-
 ## TLDR;
 
 - Requires a desktop display, mobile is too small for serious work.
@@ -52,10 +51,17 @@ Upgrades To Svelte @latest
 
 ## TODO
 
-    + security patch: lodash omit for .owner and .id
-    + parent needs edges data for the two test nodes
-    + pullable needs work, get it upgraded and clean
-    + make edges work with database version of nodes
-    + next steps, create/save new nodes by dblclicks
-    + and then, add the enter node feature for edits
-    + writables do not work as expected, never mind!
++ droppable is doing vertex/link creation
++ find edges with dest/source to location, and then get the nodes.
++ make inpout output nodess just edges
++ make workspaces load children
++ nodes should store a width property, maybe height this will help to calculate center
++ selection rectangle
++ selection ctrl click
++ security patch: lodash omit for .owner and .id
++ parent needs edges data for the two test nodes
++ pullable needs work, get it upgraded and clean
++ make edges work with database version of nodes
++ next steps, create/save new nodes by dblclicks
++ and then, add the enter node feature for edits
++ writables do not work as expected, never mind!

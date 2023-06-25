@@ -1,10 +1,4 @@
-+ droppable is doing vertex/link creation
-TRICK: find edges with dest/source to location, and then get the nodes.
-+ make inpout output nodess just edges
-+ make workspaces load children
-+ nodes should store a width property, maybe height this will help to calculate center
-+ selection rectangle
-+ selection ctrl click
+
 
 
 

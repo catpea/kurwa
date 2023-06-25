@@ -21,7 +21,7 @@ const writableHandler = {
 		  if(!node[surrogate]) node[surrogate] = kind( node[prop] );
 			const handler = value => { console.log(`UN-THROTTLED: Updated ${prop} of node.id=${node.id} to:`, value); node[prop]=value; };
 		  if(!readonly) node.destructible({id:surrogate, destroy:node[surrogate].subscribe(handler) });
-			writables[prop] = node[surrogate];
+			if(!readonly) writables[prop] = node[surrogate];
 	  	return node[surrogate];
   	}
 
@@ -40,7 +40,9 @@ export default class Node {
 		this.monitor.update(o=>o+1);
 		Object.entries(this.#writables).forEach(([key,value])=>{
 			console.log(`Announced changes to record=${this.#pojo.id}.${key}`);
-			value.update?value.update(o=>o):null
+			// value.update?value.update(o=>{return o}):null
+
+			value.set(this[key])
 		})
 	}
 
@@ -57,7 +59,6 @@ export default class Node {
 	}
 
 	get writable() {
-		console.error('AUTOWRITABBLES DO NOT WORK, when they are destructed into the top of a component, but later updated elsewhere, they do not update in the component when used with $xxx syntax. WARNING: this means that data sent from the database doews not update the GUI.');
 		return new Proxy({node: this, keys:Object.keys(this.#pojo), writables:this.#writables}, writableHandler);
 	}
 	get state(){

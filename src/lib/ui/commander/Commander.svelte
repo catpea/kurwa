@@ -41,4 +41,4 @@
 
 </div>
 
-{JSON.stringify($records)}
+<!-- {JSON.stringify($records)} -->

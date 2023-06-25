@@ -50,3 +50,4 @@ Upgrades To Svelte @latest
     + make edges work with database version of nodes
     + next steps, create/save new nodes by dblclicks
     + and then, add the enter node feature for edits
+    + writables do not work as expected, never mind!

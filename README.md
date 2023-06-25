@@ -5,6 +5,14 @@
 This is the initial release, the database is still under construction,
 a great deal of work is needed for the UI, but the geometry work is mostly OK.
 
+## Node Commander
+
+![commander.png](commander.png)
+
+Node commander, based on codemirror allows easy access and editing of all the nodes,
+data is saved to the local database via a secure api system.
+
+
 ## TLDR;
 
 - Requires a desktop display, mobile is too small for serious work.

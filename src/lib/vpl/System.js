@@ -7,7 +7,12 @@ import Node from '$lib/vpl/Node.js';
 
 export default class System {
 
-  records = writable({});
+  nodes = {};
+  records = writable();
+
+  constructor(){
+    this.records.set( this.nodes );
+  }
 
   async hydrate(pojo){
     let response = null;
@@ -15,7 +20,7 @@ export default class System {
     const lookup = get(this.records);
     const miss = lookup[id]===undefined;
     if(miss){
-      const node = new Node();
+      const node = new Node(this.nodes);
       await node.load(pojo);
       response = node;
       this.records.update(records=>{
@@ -32,8 +37,13 @@ export default class System {
   }
 
   async root(){
-    const node = (await api.vpl.root()).data.find(o=>o.kind=="node")?.data;
-    return await this.hydrate(node);
+    const root = (await api.vpl.root()).data.find(o=>o.kind=="node")?.data;
+    await this.children(root.id); // this is the reality of complex data structures - you __always__ need the whole thing to keep the SLOC low, and prevent your program from becoming mangeled. - In the future this may need to be replaced with .all.
+    return await this.hydrate(root);
+  }
+  async children(parent){
+    const nodes = (await api.vpl.list(parent)).data.find( (o) => o.kind == "nodes" )?.data;
+    return await Promise.all( nodes.map(async node=>await this.hydrate(node)) );
   }
   async node(id){
     const node = (await api.vpl.node(id)).data.find(o=>o.kind=="node")?.data;
@@ -47,6 +57,7 @@ export default class System {
     const nodes = (await api.vpl.list(parent)).data.find( (o) => o.kind == "nodes" )?.data;
     return await Promise.all( nodes.map(async node=>await this.hydrate(node)) );
   }
+
   async patch(id, data){
     const node = (await api.vpl.patch(id, data)).data.find(o=>o.kind=="node")?.data;
     return await this.hydrate(node);

@@ -34,7 +34,10 @@ onMount(() => {
 
     parent = await system.node($location);
     nodes = await system.list($location);
-    edges = parent.edges;
+    edges = parent.edges; // All the edges are stored in the parent.
+
+
+
 
   }))
 });

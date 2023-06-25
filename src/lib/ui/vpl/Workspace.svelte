@@ -12,7 +12,7 @@
   import Message from '$lib/ui/Message.svelte'; // a view of nodes
 
   export let initial = 'editor';
-  const location = writable(1);
+  const location = writable(); // there is no default location, this is set by on mount where await is available;
   const system = getContext('system');
 
   const tabs = [
@@ -39,38 +39,47 @@
 
 </script>
 
-<div class="container-fluid">
-	<div class="row border-dark border-bottom g-0">
-		<div class="col">
-			<ul class="nav nav-tabs">
-      {#each tabs as tab (tab.id)}
-			  <li class="nav-item">
-			    <button class="nav-link" on:click={()=>state[tab.command]()} class:active={tab.id==$state}>{tab.name}</button>
-			  </li>
-      {/each}
-			</ul>
-		</div>
-	</div>
-</div>
+{#if $location}
 
-{#if $state == 'editor'}
-  <div class="container-fluid p-5">
-  	<div class="row g-0">
-  		<div class="col g-0 border-end border-dark">
-  			<View {location} z={writable(1.5)}/>
-  		</div>
-  		<div class="col g-0">
-  			<View {location} z={writable(0.2)}/>
-  		</div>
-  	</div>
-  	<div class="row border-top border-dark">
-  		<div class="col g-0">
-  			<View {location} z={writable(0.69)}/>
+  <div class="container-fluid">
+  	<div class="row border-dark border-bottom g-0">
+  		<div class="col">
+  			<ul class="nav nav-tabs">
+        {#each tabs as tab (tab.id)}
+  			  <li class="nav-item">
+  			    <button class="nav-link" on:click={()=>state[tab.command]()} class:active={tab.id==$state}>{tab.name}</button>
+  			  </li>
+        {/each}
+  			</ul>
   		</div>
   	</div>
   </div>
-{:else if $state == 'commander'}
-  <Commander {location}/>
-{:else if $state == 'configuration'}
-  <Configuration/>
+
+  {#if $state == 'editor'}
+    <div class="container-fluid p-5">
+    	<div class="row g-0">
+    		<div class="col g-0 border-end border-dark">
+    			<View {location} z={writable(1.5)}/>
+    		</div>
+    		<div class="col g-0">
+    			<View {location} z={writable(0.2)}/>
+    		</div>
+    	</div>
+    	<div class="row border-top border-dark">
+    		<div class="col g-0">
+    			<View {location} z={writable(0.69)}/>
+    		</div>
+    	</div>
+    	<div class="row border-top border-dark">
+    		<div class="col g-0">
+          <Commander {location}/>
+    		</div>
+    	</div>
+    </div>
+  {:else if $state == 'commander'}
+    <Commander {location}/>
+  {:else if $state == 'configuration'}
+    <Configuration/>
+  {/if}
+
 {/if}

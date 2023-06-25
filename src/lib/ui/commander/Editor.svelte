@@ -36,6 +36,10 @@
     // hydrate
     response.input =  JSON.parse(response.input);
     response.output = JSON.parse(response.output);
+
+
+
+
     response.edges =  JSON.parse(response.edges);
     response = JSON.stringify(response, null, 2);
 

@@ -34,6 +34,19 @@
   let root = {}; // root element
   const { id, name, left, top, input, output } = node.writable; // auto-writables;
 
+
+
+    // 
+    // let { id, name, left, top, input, output } = node;
+    // node.monitor.subscribe(value=>{
+    //   id = node.id;
+    //   name = node.name;
+    //   left = node.left;
+    //   top = node.top;
+    //   input = node.input;
+    //   output = node.output;
+    // })
+
   let registered = {}; // anchor registration
 
   function destroy(id){

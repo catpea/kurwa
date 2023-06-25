@@ -10,7 +10,7 @@ import create from './create/index.js';
 import connect from './connect/index.js';
 import destroy from './destroy/index.js';
 import disconnect from './disconnect/index.js';
-import change from './change/index.js';
+import patch from './patch/index.js';
 
 
 class Vpl {
@@ -48,8 +48,8 @@ class Vpl {
 	get disconnect() {
 		return disconnect;
 	}
-	get change() {
-		return change;
+	get patch() {
+		return patch;
 	}
 
 }

@@ -1,4 +1,98 @@
 
+
+
+
+
+
+
+	//
+	// // ELIMINARRRRRRRR THIS DOEN NOT BELONG HERE WORRKSPACE ISS NOW RESPONSIBLE FOR LOADING NODES
+	// const nodes = [
+	//
+	// 	{ id: 'q',   name: writable('Grand Parent'), left:writable(101),  top: writable(111),
+	// 		outputs:[
+	// 			{id:'z', name:'in', top:writable(0), left:writable(0)},
+	// 	  ],
+	// 		inputs:[
+	// 			{id:'x', name:'out',   top:writable(0), left:writable(0)},
+	// 			{id:'c', name:'color', top:writable(0), left:writable(0)}
+	// 	  ],
+	// 	},
+	//
+	// 	{ id: 'w',  name: writable('Parent 1'), left:writable(501), top: writable(222),
+	// 	  outputs:[
+	// 			{id:'v', name:'in', top:writable(0), left:writable(0)},
+	// 		],
+	// 		inputs:[
+	// 			{id:'b', name:'out',   top:writable(0), left:writable(0)},
+	// 		],
+	// 	},
+	//
+ 	// ];
+	// // ELIMINARRRRRRRR THIS DOEN NOT BELONG HERE WORRKSPACE ISS NOW RESPONSIBLE FOR LOADING NODES
+  // const edges = [
+	// 	{id:'a',  source:'q', output:'z',  destination:'w', input:'b', color:"gold", instance:false },
+	//
+  // ];
+	//
+	// function spice(){
+	// 	edges.forEach(edge => {
+	// 		if(edge.instance){
+	// 			// noop
+	// 		}else{
+	// 			edge.source = nodes.find(o=>o.id==edge.source);
+	// 			edge.destination = nodes.find(o=>o.id==edge.destination);
+	// 			edge.output = edge.source.outputs.find(o=>o.id==edge.output);
+	// 			edge.input = edge.destination.inputs.find(o=>o.id==edge.input);
+	// 			edge.color = writable(edge.color);
+	// 			edge.instance = true;
+	// 		}
+	// 	});
+	// }
+	// spice();
+	//
+	//
+	// const actions = {
+	//
+	// 	create(node){
+	// 		 //console.log(`Created node!!!!!!`, node);
+	// 		nodes.push(node);
+	// 		nodes.c++
+	// 	},
+	// 	destroy(id){
+	// 		const connections = edges.filter(o=>o.source.id==id||o.destination.id==id);
+	//
+	// 		connections.forEach(({id})=>edges.splice(edges.findIndex(o=>o.id==id), 1));
+	// 		const index = nodes.findIndex(o=>o.id==id)
+	// 		nodes.splice(index,1);
+	// 		nodes.c++;
+	// 		edges.c++;
+	// 	},
+	// 	disconnect(id){
+	// 		const index = edges.findIndex(o=>o.id==id)
+	// 		edges.splice(index,1);
+	// 		edges.c++;
+	// 	},
+	// 	connect(connection){
+	// 		 //console.log({connection:cloneDeep(connection)});
+	// 		edges.push(connection)
+	// 		edges.c++;
+	// 		spice();
+	// 	},
+	// };
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- <div class="container">
 	<div class="row">
 		<div class="col">

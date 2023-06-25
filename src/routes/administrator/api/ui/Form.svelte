@@ -35,11 +35,11 @@
    //console.log(validators);
    //console.log( flatten([ 'Alphanumeric' ]).map(name=>validators[name]) );
    //console.log( flatten([ 'Alphanumeric' ]).map(name=>validators[name]).every(v=>{
-    const result = v( "abc");
+    //const result = v( "abc");
      //console.log(v, result);
 
-    return result;
-}) );
+    //return result;
+    //}) );
 
 
 </script>

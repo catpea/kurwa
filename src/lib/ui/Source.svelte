@@ -7,6 +7,8 @@ export let highlight = true;
 export let value;
 export let force = false;
 
+let w;
+
 $: html = value?htmlify(value):'';
 
 function htmlify(str, options = {language , highlight}){
@@ -17,4 +19,6 @@ function htmlify(str, options = {language , highlight}){
 }
 
 </script>
-<pre class="p-2"><code>{@html html}</code></pre>
+<div class="card shadow" bind:clientWidth={w}>
+  <pre class="px-2 mb-1" style="width: {w}px; overflow-x scroll;"><code>{@html html}</code></pre>
+</div>

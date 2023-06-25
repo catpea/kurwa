@@ -12,7 +12,7 @@ export const Url = (input)=>isURL(input||"", { protocols: ['http','https','ftp']
 export const FullUrl = (input)=>isURL(input||"");
 export const Alphanumeric = (input)=>isAlphanumeric(input||"", undefined, {ignore: ' '});
 export const Numeric = (input)=>isNumeric(input||"");
-export const JSON = (input)=>isJSON(input||"");
+export const Json = (input)=>isJSON(input||"");
 // export const Array = (input)=>isArray(input);
 export const Csv = (input)=>input?.length>4;
 export const Boolean = (input)=>(input===true||input===false);

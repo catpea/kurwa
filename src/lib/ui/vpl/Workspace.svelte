@@ -2,14 +2,18 @@
 
   import fsm from 'svelte-fsm';
 
+  import { onMount,onDestroy,  beforeUpdate,afterUpdate,  hasContext,getContext,setContext } from 'svelte';
   import { readable, writable, get } from 'svelte/store';
 
   import View from '$lib/ui/vpl/View.svelte'; // a view of nodes
   import Commander from '$lib/ui/commander/Commander.svelte'; // a view of nodes
+  import Configuration from '$lib/ui/vpl/Configuration.svelte'; // a view of nodes
   import Source from '$lib/ui/Source.svelte'; // a view of nodes
   import Message from '$lib/ui/Message.svelte'; // a view of nodes
 
   export let initial = 'editor';
+  const location = writable(1);
+  const system = getContext('system');
 
   const tabs = [
     {id:'editor', name: 'Editor', command:'edit',},
@@ -28,6 +32,11 @@
    }
   });
 
+  onMount(async () => {
+    const {id} = await system.root();
+    $location = id;
+  });
+
 </script>
 
 <div class="container-fluid">
@@ -44,58 +53,24 @@
 	</div>
 </div>
 
-
-<div class:d-none={$state !== 'editor'} class="container-fluid p-5">
-	<div class="row g-0">
-		<div class="col g-0 border-end border-dark">
-			<View location={writable(1)} z={writable(1.5)}/>
-		</div>
-		<div class="col g-0">
-			<View location={writable(1)} z={writable(0.2)}/>
-		</div>
-	</div>
-	<div class="row border-top border-dark">
-		<div class="col g-0">
-			<View location={writable(1)} z={writable(0.69)}/>
-		</div>
-	</div>
-</div>
-
-<div class:d-none={$state !== 'commander'} class="container p-5">
-
-  <div class="row">
-    <div class="col text-end g-0">
-      <button type="button" class="btn btn-secondary">Refresh</button>
-    </div>
+{#if $state == 'editor'}
+  <div class="container-fluid p-5">
+  	<div class="row g-0">
+  		<div class="col g-0 border-end border-dark">
+  			<View {location} z={writable(1.5)}/>
+  		</div>
+  		<div class="col g-0">
+  			<View {location} z={writable(0.2)}/>
+  		</div>
+  	</div>
+  	<div class="row border-top border-dark">
+  		<div class="col g-0">
+  			<View {location} z={writable(0.69)}/>
+  		</div>
+  	</div>
   </div>
-
-	<div class="row g-0">
-		<div class="col g-0">
-			Records
-		</div>
-		<div class="col g-0">
-			Record
-      <button type="button" class="btn btn-warning">Apply</button>
-		</div>
-	</div>
-
-</div>
-
-<div class:d-none={$state !== 'configuration'} class="container-fluid p-5">
-	<div class="row g-0">
-		<div class="col g-0">
-			pane
-		</div>
-		<div class="col g-0">
-			pane
-		</div>
-		<div class="col g-0">
-			pane
-		</div>
-	</div>
-	<div class="row">
-		<div class="col g-0">
-			status
-		</div>
-	</div>
-</div>
+{:else if $state == 'commander'}
+  <Commander {location}/>
+{:else if $state == 'configuration'}
+  <Configuration/>
+{/if}

@@ -98,9 +98,7 @@ function fixCircularReferences() {
 }
 </script>
 
-{#if $edges}
-  {JSON5.stringify($edges, fixCircularReferences)}
-{/if}
+ 
 
 {#if $location}
   <div bind:this={node} class="panzoom-parent position-relative" style=" overflow: hidden; user-select: none; touch-action: none; cursor: move;">

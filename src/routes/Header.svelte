@@ -30,6 +30,8 @@
 				<li class="nav-item"> <a class="nav-link" class:active={locator.startsWith('/administrator/gui')} href="/administrator/gui"><i class="bi bi-pip"></i> GUI Explorer</li>
 				<li class="nav-item"> <a class="nav-link" class:active={locator.startsWith('/administrator/tables')} href="/administrator/tables"><i class="bi bi-table"></i> Database Tables</li>
 
+				<li class="nav-item"> <a class="nav-link" href="https://github.com/catpea/kurwa"><i class="bi bi-git"></i> Repository</li>
+
 
 
       </ul>

@@ -14,14 +14,14 @@
 
 </script>
 
-<div class="container p-5">
+<div class="container-fluid p-5">
   <div class="row">
     <div class="col text-end p-4">
       <button type="button" class="btn btn-secondary" on:click={()=>system.all()}>Refresh</button>
     </div>
   </div>
   <div class="row g-0">
-    <div class="col-3 g-0">
+    <div class="col-1 g-0">
       <div class="list-group">
         {#each Object.entries($records) as [id, node] (id)}
           <Record bind:selected {node}/>
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="col-9 g-0">
+    <div class="col-11 g-0">
       {#if selected}
         {#key selected}
           <Editor {selected}/>

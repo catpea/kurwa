@@ -101,7 +101,7 @@
     <div class="row">
       <div class="col p-3">
         <div class="alert alert-light" role="alert">
-          {$name}<sup>(id:{$id})</sup> has {hasChanges} change{hasChanges===1?'':'s'}
+          {$name}<sup>(id:{$id})</sup> has {hasChanges} property change{hasChanges===1?'':'s'}
         </div>
         <Source language="json" value={saveMe}/>
       </div>

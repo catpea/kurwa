@@ -30,24 +30,24 @@ let parent = {};
 let nodes = [];
 let edges;
 
-let updates = 0;
-$: refresh(updates);
-
-async function refresh(){
-  console.info('FINISH ME: Assemble Nodes In Here...! Or is this too much info, they can be assembeled inside api too');
-  parent = await system.node($location);
-  nodes = await system.list($location);
-  edges = parent.writable.edges; // All the edges are stored in the parent.
-  console.log('EDGES', $edges);
-}
-
 onMount(() => {
 
-
-
   unsubscribe.push(location.subscribe(async value=>{
-    await refresh()
+    console.info('FINISH ME: Assemble Nodes In Here...! Or is this too much info, they can be assembeled inside api too');
+    parent = await system.node($location);
+    nodes = await system.list($location);
+    edges = parent.writable.edges; // All the edges are stored in the parent.
+    console.log('EDGES', $edges);
   }))
+
+  unsubscribe.push(system.records.subscribe(async value=>{
+    console.warn('system.records.subscribe un-throttled operation!');
+    parent = Object.values(value).find(o=>o.id==$location);
+    edges = parent.writable.edges; // All the edges are stored in the parent.
+    nodes = Object.values(value).filter(o=>o.parent==$location)
+  }))
+
+
   // unsubscribe.push(system.records.subscribe(async value=>{
   //   console.info('FINISH ME: Assemble Nodes In Here...! Or is this too much info, they can be assembeled inside api too');
   //   parent = await system.node($location);
@@ -115,7 +115,6 @@ async function createNode(seed){
   };
   const node = Object.assign({}, seed, options)
   await system.create($location, JSON.stringify(node))
-  await refresh()
 }
 
 </script>

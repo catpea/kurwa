@@ -40,8 +40,8 @@
 
   let registered = {}; // anchor registration
 
-  function destroy(id){
-    system.destroy(id);
+  async function destroy(id){
+    await system.destroy(id);
   }
 
   function getAnchorPosition(anchorNode) {

@@ -62,6 +62,12 @@ export default class System {
     return await Promise.all( nodes.map(async node=>await this.hydrate(node)) );
   }
 
+  async create(id, data){
+    const node = (await api.vpl.create(id, data)).data.find(o=>o.kind=="node")?.data;
+    console.log('create returned POJO', node);
+    return await this.hydrate(node);
+  }
+
   async patch(id, data){
     console.log('sending patch to api.vpl.patch on server', id, data);
     const node = (await api.vpl.patch(id, data)).data.find(o=>o.kind=="node")?.data;

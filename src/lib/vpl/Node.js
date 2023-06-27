@@ -225,7 +225,12 @@ export default class Node extends Writables {
 
 
 	#ioBuilder(json, existing=[]){
-		const master = JSON.parse(json);
+		let master;
+    try {
+      master = JSON.parse(json);
+    }catch(e){
+      master = [];
+    }
     master.forEach(anchor=>{
       const located = existing.find(o=>o.id==anchor.id);
       if(located){
@@ -309,7 +314,14 @@ export default class Node extends Writables {
   get edges() {
     //  "edges": [{id:'a', source:'2', output:'out', destination:'3', input:'b', color:"gold"}]
 
-    const rehydrated = JSON.parse(this.pojo.edges || "[]");
+    let rehydrated;
+
+     try {
+      rehydrated = JSON.parse(this.pojo.edges || "[]");
+     } catch(e){
+       rehydrated = [];
+     }
+
     rehydrated.forEach((o) => (o.color = writable(o.color)));
     rehydrated.forEach(edge => {
     	edge.source = this.nodes[edge.source];

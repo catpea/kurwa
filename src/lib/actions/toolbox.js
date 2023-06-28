@@ -5,7 +5,7 @@
 import {first} from 'lodash-es';
 import { v4 as guid } from 'uuid';
 import { get, writable } from 'svelte/store';
-import {Base} from '../traits/Base.js';
+import {Base} from './Base.js';
 export const pulline =  { active:writable(false), x1:writable(0), y1:writable(0), x2:writable(0), y2:writable(0) } ;
 
 class Toolbox extends Base {

@@ -324,13 +324,17 @@ export default class Node extends Writables {
 
     rehydrated.forEach((o) => (o.color = writable(o.color)));
     rehydrated.forEach(edge => {
+      try{
     	edge.source = this.nodes[edge.source];
     	edge.destination = this.nodes[edge.destination];
     	edge.output = edge.source.output.find(o=>o.id==edge.output);
       edge.input = edge.destination.input.find(o=>o.id==edge.input);
+    }catch(e){
+      edge.error=e;
+    }
     })
 
-    return rehydrated;
+    return rehydrated.filter(o=>!o.error);
   }
 
   set edges(value) {

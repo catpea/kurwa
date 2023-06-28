@@ -11,7 +11,7 @@ import Value from '$lib/ui/Value.svelte';
 import Source from '$lib/ui/Source.svelte';
 import Node from '$lib/ui/vpl/Node.svelte';
 import Anchor from '$lib/ui/vpl/Anchor.svelte';
-import {pulline} from '$lib/traits/pullable.js';
+import {pulline} from '$lib/actions/pullable.js';
 import {toolbox} from '$lib/actions/toolbox.js';
 
 let unsubscribe = [];
@@ -31,6 +31,10 @@ let nodes = [];
 let edges;
 
 onMount(() => {
+
+  // WARNING: View does not yet do z-order
+  console.log('WARNING: View does not yet do z-order');
+
 
   unsubscribe.push(location.subscribe(async value=>{
     console.info('FINISH ME: Assemble Nodes In Here...! Or is this too much info, they can be assembeled inside api too');

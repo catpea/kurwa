@@ -8,7 +8,7 @@ import all from './all/index.js';
 import list from './list/index.js';
 import create from './create/index.js';
 import connect from './connect/index.js';
-import destroy from './destroy/index.js';
+import remove from './remove/index.js';
 import disconnect from './disconnect/index.js';
 import patch from './patch/index.js';
 
@@ -39,8 +39,8 @@ class Vpl {
 	get create() {
 		return create;
 	}
-	get destroy() {
-		return destroy;
+	get remove() {
+		return remove;
 	}
 	get connect() {
 		return connect;

@@ -51,6 +51,7 @@ Upgrades To Svelte @latest
 
 ## TODO
 
++ z-order
 + droppable is doing vertex/link creation
 + find edges with dest/source to location, and then get the nodes.
 + make inpout output nodess just edges

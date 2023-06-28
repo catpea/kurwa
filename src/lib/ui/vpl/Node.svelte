@@ -4,8 +4,8 @@
   import { v4 as guid } from 'uuid';
 
   import Value from '$lib/ui/Value.svelte';
-  import {draggable} from '$lib/traits/draggable.js';
-  import {pullable} from '$lib/traits/pullable.js';
+  import {draggable} from '$lib/actions/draggable.js';
+  import {pullable} from '$lib/actions/pullable.js';
 
   import { writable, get } from 'svelte/store';
 
@@ -40,8 +40,8 @@
 
   let registered = {}; // anchor registration
 
-  async function destroy(id){
-    await system.destroy(id);
+  async function remove(id){
+    await system.remove(id);
   }
 
   function getAnchorPosition(anchorNode) {
@@ -94,7 +94,7 @@
   <div bind:this={root} use:monitor={{update: payload}} class="card position-absolute shadow panzoom-exclude" use:draggable={{handle:'.card-header', left, top, translate}} style="left: {$left}px; top: {$top}px; width: 18rem; opacity: .75;">
     <div class="user-select-none card-header pe-1">
       {$name}
-      <i on:click={()=>destroy($id)} class="bi bi-x-circle float-end"></i>
+      <i on:click={()=>remove($id)} class="bi bi-x-circle float-end"></i>
     </div>
     {#if $output}
       {#each $output as anchor (anchor.id)}
@@ -105,7 +105,7 @@
             </div>
           </div>
           <div class="col-1 d-flex align-items-center flex-row-reverse">
-            <i data-node={node.id} data-anchor={anchor.id} class="anchor-point bi bi-arrow-right-circle-fill text-success fs-4" use:register={anchor} use:pullable={{type: 'output', data:{vertex:{}, link:{}}, node, anchor, translate}}></i>
+            <i data-node={node.id} data-anchor={anchor.id} class="anchor-point bi bi-arrow-right-circle-fill text-success fs-4" use:register={anchor} use:pullable={{type: 'output', data:{vertex:{}, link:{}}, node, anchor, translate, system}}></i>
           </div>
         </div>
       {/each}
@@ -114,7 +114,7 @@
       {#each $input as anchor (anchor.id)}
         <div class="row g-0">
           <div class="col-1">
-            <i data-node={node.id} data-anchor={anchor.id} class="anchor-point bi bi-arrow-right-square-fill text-info fs-4" use:register={anchor} use:pullable={{type: 'input', data:{vertex:{}, link:{}}, node, anchor, translate}}></i>
+            <i data-node={node.id} data-anchor={anchor.id} class="anchor-point bi bi-arrow-right-square-fill text-info fs-4" use:register={anchor} use:pullable={{type: 'input', data:{vertex:{}, link:{}}, node, anchor, translate, system}}></i>
           </div>
           <div class="col-11 m-0">
             <div class="card-body p-0">

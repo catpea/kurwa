@@ -40,6 +40,12 @@ export default class System {
     return response;
   }
 
+
+
+
+
+
+
   async root(){
     const root = (await api.vpl.root()).data.find(o=>o.kind=="node")?.data;
     await this.children(root.id); // this is the reality of complex data structures - you __always__ need the whole thing to keep the SLOC low, and prevent your program from becoming mangeled. - In the future this may need to be replaced with .all.
@@ -74,9 +80,14 @@ export default class System {
     console.log('PATCH RETURNED POJO', node);
     return await this.hydrate(node);
   }
-  async delete(id){
-    const result = await api.vpl.destroy(id);
-    console.log({result});
+
+  async remove(id){
+    const response = await api.vpl.remove(id);
+    const count = response.data.find(o=>o.kind=="removed")?.data;
+    if(count>0){
+      delete this.nodes[id];
+      this.records.set(this.nodes)
+    }
   }
 
 

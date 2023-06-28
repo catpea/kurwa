@@ -1,8 +1,11 @@
 <script>
-  import { onMount,onDestroy,  hasContext,getContext,setContext } from 'svelte';
+  import { onMount,onDestroy,  hasContext,getContext,setContext,  createEventDispatcher } from 'svelte';
 
+  const dispatch = createEventDispatcher();
 
-  export let edge;
+  export let node; // id
+  export let edge; // id
+
   export let color;
   export let x1;
   export let y1;
@@ -18,15 +21,6 @@
   $: b1 = (($y1+test));
   $: a2 = (($x2+test)-ml);
   $: b2 = (($y2+test));
-
-
-
-
-  const bus = getContext('bus');
-
-  function disconnect() {
-    bus.set(['disconnect', edge]);
-  }
 
 </script>
 
@@ -58,4 +52,4 @@
 <!-- <path on:click={disconnect} class="anchor-line ants panzoom-exclude"  marker-mid="url(#circle)" stroke-linecap="round" style="cursor: not-allowed; --stroke-color: {$color};" d="M {$x1+test}, {$y1+test} L {$x2+test} {$y2+test}"></path> -->
 
 <!-- Curve -->
-<path on:click={disconnect}   class="anchor-line ants panzoom-exclude" stroke-linecap="round" style=" cursor: not-allowed; --stroke-color: {$color};" d="M{$x1+test},{$y1+test} C{a1},{b1} {a2},{b2} {$x2+test},{$y2+test}"  marker-start="url(#circle)" marker-mid="url(#circle)"  marker-end="url(#circle)"></path>
+<path on:click={() => dispatch('disconnect', {node, edge})}   class="anchor-line ants panzoom-exclude" stroke-linecap="round" style=" cursor: not-allowed; --stroke-color: {$color};" d="M{$x1+test},{$y1+test} C{a1},{b1} {a2},{b2} {$x2+test},{$y2+test}"  marker-start="url(#circle)" marker-mid="url(#circle)"  marker-end="url(#circle)"></path>

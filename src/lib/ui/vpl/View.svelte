@@ -51,6 +51,10 @@ onMount(() => {
     nodes = Object.values(value).filter(o=>o.parent==$location)
   }))
 
+  unsubscribe.push(parent.writable.edges.subscribe(async value=>{
+    edges = parent.writable.edges; // All the edges are stored in the parent.
+  }))
+
 
   // unsubscribe.push(system.records.subscribe(async value=>{
   //   console.info('FINISH ME: Assemble Nodes In Here...! Or is this too much info, they can be assembeled inside api too');
@@ -121,6 +125,12 @@ async function createNode(seed){
   await system.create($location, JSON.stringify(node))
 }
 
+async function destroyEdge({detail:{node, edge}}){
+  console.log('destroyEdge', node, edge);
+
+  parent.writables.edges.update(value=> value.filter(o=>o.id!==edge) )
+}
+
 </script>
 
 
@@ -133,9 +143,11 @@ async function createNode(seed){
     </span>
 
     <svg class="position-absolute top-0 left-0 w-100 h-100" style="pointer-events: none;"><defs><pattern id="graph-pattern-{workspaceId}" x={ $x*$z } y={ $y*$z } width="{64*$z}" height="{64*$z}" patternUnits="userSpaceOnUse"><circle class="background-dot " style="fill: var(--bs-primary-border-subtle);" r="{ 1 }" cx={32} cy={32}></circle></pattern></defs><rect width="100%" height="100%" fill="url(#graph-pattern-{workspaceId})"></rect></svg>
-  	<div use:panzoom={{scale: $z}} class="w-100" style="height: 480px; border: solid 1px red;">
+  	<div use:panzoom={{scale: $z}}   style="height: 480px; ">
 
-        <svg class="position-absolute" style="top: -1000px; left:-1000px; width:  5000px; height: 5000px; pointer-events: none;">
+
+
+        <svg use:toolbox={{translate, operation:createNode}} class="position-absolute" style="top: -1000px; left:-1000px; width:  5000px; height: 5000px;">
         <defs>
           <marker id="circle" markerWidth="16" markerHeight="16" refX="8" refY="8">
             <circle cx="8" cy="8" r="2" stroke="green" fill="#ff0000" />
@@ -147,12 +159,12 @@ async function createNode(seed){
           {/if}
           {#if $edges}
             {#each $edges as edge (edge.id)}
-              <Anchor color={edge.color} edge={edge.id} x1={edge.output.left} y1={edge.output.top} x2={edge.input.left} y2={edge.input.top} {translate} />
+              <Anchor color={edge.color} node={$location} edge={edge.id} x1={edge.output.left} y1={edge.output.top} x2={edge.input.left} y2={edge.input.top} {translate} on:disconnect={destroyEdge}/>
             {/each}
           {/if}
         </svg>
 
-        <div use:toolbox={{translate, operation:createNode}} class="position-absolute" style="top: -1000px; left:-1000px; width:  5000px; height: 5000px; border: dotted yellow 12px;"></div>
+
         {#each nodes as node (node.id)}
           <Node bind:node {translate}/>
         {/each}

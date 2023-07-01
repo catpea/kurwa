@@ -12,7 +12,7 @@ export default class System {
 
   constructor(){
     this.records.set( this.nodes );
-    this.records.subscribe(records=>console.log('Records have changed', records))
+    // this.records.subscribe(records=>console.log('Records have changed', records))
   }
 
   async hydrate(pojo){
@@ -23,20 +23,20 @@ export default class System {
     const miss = this.nodes[id]===undefined;
 
     if(miss){
-      console.log('Pojo not in records.');
-      const node = new Node(this.nodes);
+      // console.log('Pojo not in records.');
+      const node = new Node(this);
       await node.load(pojo);
       response = node;
       this.nodes[id]=node;
       this.records.set(this.nodes); // NOTE: ignored becasue old and new values are the same
     }else{
-      console.log('Pojo existed in records.');
+      // console.log('Pojo existed in records.');
       response = this.nodes[id];
       await response.load(pojo);
       this.records.set(this.nodes); // NOTE: ignored becasue old and new values are the same
     }
 
-    console.log(`Object ${response.id} has changed.`);
+    // console.log(`Object ${response.id} has changed.`);
     return response;
   }
 
@@ -70,14 +70,14 @@ export default class System {
 
   async create(id, data){
     const node = (await api.vpl.create(id, data)).data.find(o=>o.kind=="node")?.data;
-    console.log('create returned POJO', node);
+    // console.log('create returned POJO', node);
     return await this.hydrate(node);
   }
 
   async patch(id, data){
-    console.log('sending patch to api.vpl.patch on server', id, data);
+    // console.log('sending patch to api.vpl.patch on server', id, data);
     const node = (await api.vpl.patch(id, data)).data.find(o=>o.kind=="node")?.data;
-    console.log('PATCH RETURNED POJO', node);
+    // console.log('PATCH RETURNED POJO', node);
     return await this.hydrate(node);
   }
 
@@ -105,10 +105,10 @@ export default class System {
   // Garbage Collection
 
   async mount(){
-    console.log('system.mount()');
+    // console.log('system.mount()');
   }
   async destroy(){
-    console.log('system.destroy()');
+    // console.log('system.destroy()');
   }
 
   //

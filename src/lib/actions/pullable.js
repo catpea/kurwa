@@ -53,10 +53,8 @@ class Pullable extends Base {
     pulline.active.set(false);
     this.off('mousemove: dragging');
     this.off('mouseup: end dragging operation');
-
     if(!e.target.dataset.node) return;
     if(!e.target.dataset.anchor) return;
-    
     const parent = Object.values(get(this.system.records)).find(o=>o.id==this.node.parent);
     const edges = [];
     if(this.type === 'output'){
@@ -65,7 +63,6 @@ class Pullable extends Base {
       edges.push({id:guid(), source:this.system.nodes[e.target.dataset.node], output:this.system.nodes[e.target.dataset.node].output.find(o=>o.id==e.target.dataset.anchor), destination:this.system.nodes[this.node.id], input:this.system.nodes[this.node.id].input.find(o=>o.id==this.anchor.id), color:writable("gold")})
     }
     parent.writables.edges.update(value=>value.concat(...edges))
-
   }
   operate(e){
     // NOTE: this fires every few ms.

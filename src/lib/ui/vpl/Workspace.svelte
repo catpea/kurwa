@@ -13,7 +13,7 @@
   import Message from '$lib/ui/Message.svelte'; // a view of nodes
 
   export let initial = 'editor';
-  const location = writable(); // there is no default location, this is set by on mount where await is available;
+  const parent = writable(); // there is no default location, this is set by on mount where await is available;
   const system = getContext('system');
 
   const tabs = [
@@ -36,14 +36,12 @@
   });
 
   onMount(async () => {
-    const {id} = await system.root();
-    $location = id;
+    $parent = await system.root();
   });
 
 </script>
 
-{#if $location}
-
+{#if $parent}
   <div class="container-fluid mt-1">
   	<div class="row border-dark border-bottom g-0">
   		<div class="col">
@@ -57,34 +55,32 @@
   		</div>
   	</div>
   </div>
-
   {#if $state == 'editor'}
     <div class="container-fluid p-5">
     	<div class="row g-0">
     		<div class="col g-0 border-end border-dark">
-    			<View {location} z={writable(1.5)}/>
+    			<View {parent} z={writable(1.5)}/>
     		</div>
     		<div class="col g-0">
-    			<View {location} z={writable(0.2)}/>
-    		</div>
-    	</div>
-    	<div class="row border-top border-dark">
-    		<div class="col g-0">
-    			<View {location} z={writable(0.69)}/>
+    			<View {parent} z={writable(0.2)}/>
     		</div>
     	</div>
     	<div class="row border-top border-dark">
     		<div class="col g-0">
-          <Commander {location}/>
+    			<View {parent} z={writable(0.69)}/>
+    		</div>
+    	</div>
+    	<div class="row border-top border-dark">
+    		<div class="col g-0">
+          <Commander {parent}/>
     		</div>
     	</div>
     </div>
   {:else if $state == 'architecture'}
-    <Architecture {location}/>
+    <Architecture {parent}/>
   {:else if $state == 'commander'}
-    <Commander {location}/>
+    <Commander {parent}/>
   {:else if $state == 'configuration'}
     <Configuration/>
   {/if}
-
 {/if}

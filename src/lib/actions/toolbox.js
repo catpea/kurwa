@@ -26,10 +26,10 @@ class Toolbox extends Base {
 
   create(){
     this.on(this.element, 'dblclick: primary', this.activate);
-    console.log(`Installed dblclick on`, this.element);
+    // console.log(`Installed dblclick on`, this.element);
   }
   destroy(){
-    this.off('mousedown: primary');
+    this.off('dblclick: primary');
     if(this.destructors.length) console.error(`lol, ${this.description} has memory leaks now.`);
   }
 

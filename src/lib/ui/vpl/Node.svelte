@@ -34,9 +34,9 @@
   let root = {}; // root element
   const { id, name, left, top, input, output } = node.writable; // auto-writables;
 
-  input.subscribe(value=>{
-    console.log('INPUT CHANGEDDDDDDDDDD!!!', value);
-  });
+  // input.subscribe(value=>{
+  //   console.log('INPUT CHANGEDDDDDDDDDD!!!', value);
+  // });
 
   let registered = {}; // anchor registration
 

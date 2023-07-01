@@ -64,7 +64,7 @@
       }
       hasChanges = Object.keys(changed).length;
       hasError = null;
-      response = JSON.stringify(changed, null, 2);
+      response = JSON.stringify(changed);
       return response;
     } catch(e){
       console.error(e)

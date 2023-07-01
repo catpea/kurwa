@@ -8,7 +8,7 @@
 
   const system = getContext('system');
   const records = system.records;
-  $: console.log('records changed!', $records);
+  // $: console.log('records changed!', $records);
 
   let selected;
 
@@ -22,7 +22,7 @@
   </div>
 
   <div class="row g-0">
-    <div class="col-1 g-0">
+    <div class="col-4 col-xl-3 g-0">
       <div class="list-group">
         {#each Object.entries($records) as [id, node] (id)}
           <Record bind:selected {node}/>
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="col-11 g-0">
+    <div class="col-8 col-xl-9 g-0">
       {#if selected}
         {#key selected}
           <Editor {selected}/>

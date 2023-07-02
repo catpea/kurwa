@@ -1,5 +1,6 @@
 <script>
 
+  // import { browser } from '$app/environment';
   import { onMount,onDestroy,  hasContext,getContext,setContext } from 'svelte';
   import { v4 as guid } from 'uuid';
 
@@ -16,8 +17,14 @@
   const {z} = translate;
 
   export let node;
-  onMount(() => {
-    /*...*/
+  onMount(async () => {
+
+
+    const dynamicName = '/library/debug/logger/index.js'; // avoids detection by svelte compiler
+    const {default:programModule} = await import(dynamicName);
+    // await programModule({in:'HELLO', out:'WORLD'})
+
+
   });
   onDestroy(() => {
     unsubscribe.map(o=>o())
@@ -37,6 +44,8 @@
   // input.subscribe(value=>{
   //   console.log('INPUT CHANGEDDDDDDDDDD!!!', value);
   // });
+
+
 
   let registered = {}; // anchor registration
 

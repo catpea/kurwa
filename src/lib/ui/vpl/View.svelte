@@ -22,16 +22,33 @@ export let parent;
 let nodes;
 let edges;
 
+$: reconnect(edges);
+
 // z can be set via attribute
 export let z;
 const translate = {x:writable(0), y:writable(0), z}
 const {x,y} = translate;
+
+function reconnect(edges){
+  if(edges){
+    for (const edge of get(edges)) {
+      console.log({edge});
+
+      const subscription = edge.output.data.subscribe(v=>edge.input.data.set(v));
+      unsubscribe.push(subscription);
+    }
+  }
+}
 
 onMount(async () => {
   console.warn('WARNING: View does not yet do z-order');
   const view = await $parent.view(); // .view returns writables.
   nodes = view.nodes;
   edges = view.edges;
+
+
+
+
 });
 
 onDestroy(() => {

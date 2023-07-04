@@ -2,6 +2,8 @@ import {chunk} from "lodash-es";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from 'uuid';
 
+// rm database.db; npm run migration; npm run seed;
+
 export async function seed(knex) {
 
   const created = (new Date()).toISOString();
@@ -20,41 +22,165 @@ export async function seed(knex) {
 
   await knex('node').insert([
     {
-      id: 1,
-      owner:1,
-      parent:null,
-      name: 'root',
+      "id": 1,
+      "owner": 1,
+      "parent": null,
       created,
       updated,
+      "revision": null,
+      "cache": null,
+      "data": null,
+      "tags": null,
+      "name": "root",
+      "type": null,
+      "extends": null,
+      "description": "Hello, this is root speaking...",
+      "top": null,
+      "left": null,
+      "order": null,
+      "input": JSON.stringify([]),
+      "output": JSON.stringify([]),
+      "properties": null,
+      "values": null,
+      "program": null,
+      "validate": null,
+      "test": null,
+      "edges": JSON.stringify([
+        {
+          "id": "a",
+          "source": 2,
+          "output": "out",
+          "destination": 3,
+          "input": "in",
+          "color": "gold"
+        }
+      ])
     }
   ]);
 
   await knex('node').insert([
     {
-      id: 2,
-      owner:1,
-      parent:1,
-      name: 'Alice',
+      "id": 2,
+      "owner": 1,
+      "parent": 1,
       created,
       updated,
-      top: 100,
-      left: 100,
-      input: JSON.stringify([{id:'2a', name:'in', top:0, left:0}]),
-      output: JSON.stringify([{id:'2b', name:'out', top:0, left:0}]),
+      "revision": null,
+      "cache": null,
+      "data": null,
+      "tags": null,
+      "name": "Heartbeat Data",
+      "type": "heartbeat",
+      "extends": null,
+      "description": null,
+      "top": 86.18656630880866,
+      "left": 51.55969892642601,
+      "order": null,
+      "input": JSON.stringify([
+        {
+          "id": "in",
+          "name": "Input",
+          "top": 203.0014860650553,
+          "left": 104.8287236544463
+        },
+        {
+          "id": "transform",
+          "name": "Transform",
+          "top": 235.0014860650553,
+          "left": 104.8287236544463,
+          "value":"UPPERCASE",
+        },
+        {
+          "id": "order",
+          "name": "Order",
+          "top": 267.0014860650553,
+          "left": 104.8287236544463
+        }
+      ]),
+      "output": JSON.stringify([
+        {
+          "id": "out",
+          "name": "Output",
+          "top": 117.75297564655878,
+          "left": 313.8287236544463
+        },
+        {
+          "id": "debug",
+          "name": "Debug",
+          "top": 164.75297564655878,
+          "left": 313.8287236544463
+        }
+      ]),
+      "properties": null,
+      "values": null,
+      "program": null,
+      "validate": null,
+      "test": null,
+      "edges": JSON.stringify([])
     }
   ]);
+
+
+
   await knex('node').insert([
+
     {
-      id: 3,
-      owner:1,
-      parent:1,
-      name: 'Bob',
+      "id": 3,
+      "owner": 1,
+      "parent": 1,
       created,
       updated,
-      top: 100,
-      left: 350,
-      input: JSON.stringify([{id:'3a', name:'in', top:0, left:0}]),
-      output: JSON.stringify([{id:'3b', name:'out', top:0, left:0}]),
+      "revision": null,
+      "cache": null,
+      "data": null,
+      "tags": null,
+      "name": "Print Text",
+      "type": "debug",
+      "extends": null,
+      "description": null,
+      "top": 60.81343369119133,
+      "left": 493.440301073574,
+      "order": null,
+      "input": JSON.stringify([
+        {
+          "id": "in",
+          "name": "Input",
+          "top": 96.99759486101675,
+          "left": 398.83091713725656
+        },
+        {
+          "id": "transform",
+          "name": "Transform",
+          "top": 128.99758380392325,
+          "left": 398.83091713725656
+        },
+        {
+          "id": "order",
+          "name": "Order",
+          "top": 160.99758380392325,
+          "left": 398.83091713725656
+        }
+      ]),
+      "output": JSON.stringify([
+        {
+          "id": "out",
+          "name": "Output",
+          "top": 58.74637017733809,
+          "left": 607.8309171372566
+        },
+        {
+          "id": "debug",
+          "name": "Debug",
+          "top": 156.75,
+          "left": 568.8333333333334
+        }
+      ]),
+      "properties": null,
+      "values": null,
+      "program": null,
+      "validate": null,
+      "test": null,
+      "edges": JSON.stringify([])
     }
   ]);
 

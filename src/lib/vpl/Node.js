@@ -1,5 +1,5 @@
 import { readable, writable, get } from "svelte/store";
-import { cloneDeep, flatten, debounce } from "lodash-es";
+import { cloneDeep, flatten, debounce, omit } from "lodash-es";
 
 
 
@@ -234,9 +234,11 @@ class Properties extends Writables {
       if(located){
         anchor.top = located.top;
         anchor.left = located.left;
+        anchor.data = located.data;
       }else{
         anchor.top = writable(anchor.top);
         anchor.left = writable(anchor.left);
+        anchor.data = writable(anchor.value||null);
       }
     })
 		return master;
@@ -256,7 +258,8 @@ class Properties extends Writables {
     return this.#inputStructure;
   }
   set input(value) {
-    const clean = cloneDeep(value);
+    const clean = cloneDeep(value).map((o) => omit(o, ['data'] ));
+
     clean.forEach((o) => (o.top = get(o.top)));
     clean.forEach((o) => (o.left = get(o.left)));
     this._clientVersion.input = JSON.stringify(clean);
@@ -274,7 +277,7 @@ class Properties extends Writables {
     return this.#outputStructure;
   }
   set output(value) {
-    const clean = cloneDeep(value);
+    const clean = cloneDeep(value).map((o) => omit(o, ['data'] ));
     clean.forEach((o) => (o.top = get(o.top)));
     clean.forEach((o) => (o.left = get(o.left)));
     this._clientVersion.output = JSON.stringify(clean);

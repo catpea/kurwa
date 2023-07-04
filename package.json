@@ -59,6 +59,7 @@
     "simple-tree-utils": "^1.0.1",
     "sqlite3": "^5.1.6",
     "svelte-fsm": "^1.2.0",
+    "svelte-to-observable": "^0.0.9",
     "uuid": "^9.0.0",
     "validator": "^13.9.0"
   }

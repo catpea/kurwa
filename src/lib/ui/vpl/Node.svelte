@@ -1,8 +1,11 @@
 <script>
 
+  import nodes from '$lib/nodes/index.js';
+
   // import { browser } from '$app/environment';
   import { onMount,onDestroy,  hasContext,getContext,setContext } from 'svelte';
   import { v4 as guid } from 'uuid';
+  import { debounce } from 'lodash-es';
 
   import Value from '$lib/ui/Value.svelte';
   import {draggable} from '$lib/actions/draggable.js';
@@ -20,10 +23,13 @@
   onMount(async () => {
 
 
-    const dynamicName = '/library/debug/logger/index.js'; // avoids detection by svelte compiler
-    const {default:programModule} = await import(dynamicName);
+    // const dynamicName = '/library/debug/logger/index.js'; // avoids detection by svelte compiler
+    // const {default:programModule} = await import(dynamicName);
     // await programModule({in:'HELLO', out:'WORLD'})
 
+    const type = node.type||'debug';
+    const installer = nodes[type];
+    unsubscribe.push( await installer(node) );
 
   });
   onDestroy(() => {
@@ -77,7 +83,8 @@
   function monitor(node, {update}){
     const config = { attributes: true, childList: true, subtree: true };
     const callback = (mutationList, observer) => update();
-    const observer = new MutationObserver(callback);
+    const debounced = debounce(callback, 12);
+    const observer = new MutationObserver(debounced);
     observer.observe(node, config);
     setTimeout(()=>payload(),1); // TIMING PROBLEM
     return {

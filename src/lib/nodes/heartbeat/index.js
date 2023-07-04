@@ -9,15 +9,15 @@ export default async function heartbeat( node ){
     observables[o.id] = observable;
   });
 
-  const combined = combineLatest(observables);
-  const subscription = combined.subscribe(value => console.log(value));
-  subscriptions.push( subscription );
+  // const combined = combineLatest(observables);
+  // const subscription = combined.subscribe(value => console.log(value));
+  // subscriptions.push( subscription );
 
   let counter = 0;
   const intervalId = setInterval(()=>{
     node.output.forEach( o=> o.data.set(counter++) );
     console.log('BEAT', counter);
-  }, 1_000);
+  }, 5_000);
 
 
   const unsubscribe = ()=>{

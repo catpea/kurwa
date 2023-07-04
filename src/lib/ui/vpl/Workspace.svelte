@@ -35,8 +35,35 @@
    }
   });
 
+  $: reconnect($parent);
+
+  let edgeSubscriptions = [];
+
+  async function reconnect(parent){
+    if(!parent) return;
+    const view = await parent.view(); // .view returns writables.
+    const edges = view.edges;
+
+    if(edges){
+      edgeSubscriptions.map(o=>o())
+
+      for (const edge of get(edges)) {
+        console.log({edge});
+        const subscription = edge.output.data.subscribe(v=>edge.input.data.set(v));
+        edgeSubscriptions.push( subscription );
+      }
+    }
+  }
+
   onMount(async () => {
     $parent = await system.root();
+    await reconnect($parent);
+  });
+
+
+  onDestroy(() => {
+    edgeSubscriptions.map(o=>o())
+
   });
 
 </script>

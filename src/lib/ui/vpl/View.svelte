@@ -15,6 +15,7 @@ import {pulline} from '$lib/actions/pullable.js';
 import {toolbox} from '$lib/actions/toolbox.js';
 
 let unsubscribe = [];
+// let edgeSubscriptions = [];
 
 const system = getContext('system');
 
@@ -22,23 +23,13 @@ export let parent;
 let nodes;
 let edges;
 
-$: reconnect(edges);
 
 // z can be set via attribute
 export let z;
 const translate = {x:writable(0), y:writable(0), z}
 const {x,y} = translate;
 
-function reconnect(edges){
-  if(edges){
-    for (const edge of get(edges)) {
-      console.log({edge});
 
-      const subscription = edge.output.data.subscribe(v=>edge.input.data.set(v));
-      unsubscribe.push(subscription);
-    }
-  }
-}
 
 onMount(async () => {
   console.warn('WARNING: View does not yet do z-order');
@@ -53,6 +44,8 @@ onMount(async () => {
 
 onDestroy(() => {
   unsubscribe.map(o=>o())
+  // edgeSubscriptions.map(o=>o())
+
 });
 
 // based on location, we must fetch nodes and edges with parent=location;

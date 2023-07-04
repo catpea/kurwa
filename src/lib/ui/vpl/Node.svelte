@@ -27,13 +27,19 @@
     // const {default:programModule} = await import(dynamicName);
     // await programModule({in:'HELLO', out:'WORLD'})
 
-    const type = node.type||'debug';
-    const installer = nodes[type];
-    unsubscribe.push( await installer(node) );
+    // if(!node.installed){
+    //   const type = node.type||'debug';
+    //   const installer = nodes[type];
+    //   console.log(`Installing nodes for ${node.id}`);
+    //   unsubscribe.push( await installer(node, {z:get(z)}) );
+    //   node.installed = true;
+    // }
+
 
   });
   onDestroy(() => {
-    unsubscribe.map(o=>o())
+    unsubscribe.map(o=>o());
+    // node.installed = false;
   });
 
   const tests = [

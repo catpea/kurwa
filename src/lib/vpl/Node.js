@@ -1,5 +1,6 @@
 import { readable, writable, get } from "svelte/store";
 import { cloneDeep, flatten, debounce, omit } from "lodash-es";
+import nodes from '$lib/nodes/index.js';
 
 
 
@@ -8,6 +9,8 @@ class Pojo {
   async load(pojo) {
     this._serverVersion = cloneDeep(pojo);
     this._clientVersion = cloneDeep(pojo);
+    this.stop();
+    await this.start();
     this.announce();
   }
   get pojo() {
@@ -16,6 +19,24 @@ class Pojo {
   get state() {
     return cloneDeep(this._clientVersion);
   }
+
+  _installed = false;
+  _started = [];
+  async start(){
+    if (this._installed) return;
+
+    const type = this.type||'debug';
+    const installer = nodes[type];
+    this._started.push( await installer(this) );
+    this._installed = true;
+  }
+  stop(){
+    this._started.map(o=>o());
+    this._started = [];
+    this._installed = false;
+
+  }
+
 }
 
 class Writables extends Pojo {

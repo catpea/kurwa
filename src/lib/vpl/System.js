@@ -41,7 +41,17 @@ export default class System {
   }
 
 
-
+  // const view = await $parent.view(); // .view returns writables.
+  // nodes = view.nodes;
+  // edges = view.edges;
+  // 
+  // if(!node.installed){
+  //   const type = node.type||'debug';
+  //   const installer = nodes[type];
+  //   console.log(`Installing nodes for ${node.id}`);
+  //   unsubscribe.push( await installer(node, {z:get(z)}) );
+  //   node.installed = true;
+  // }
 
 
 

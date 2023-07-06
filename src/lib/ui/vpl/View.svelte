@@ -101,7 +101,7 @@ async function createNode(seed){
 
 async function destroyEdge({detail:{node, edge}}){
   console.log('destroyEdge', node, edge);
-  parent.writables.edges.update(value=> value.filter(o=>o.id!==edge) )
+  $parent.writables.edges.update(value=> value.filter(o=>o.id!==edge) )
 }
 </script>
 

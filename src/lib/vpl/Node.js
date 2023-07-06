@@ -1,4 +1,4 @@
-import { readable, writable, get } from "svelte/store";
+import { readable, writable, derived, get } from "svelte/store";
 import { cloneDeep, flatten, debounce, omit } from "lodash-es";
 import nodes from '$lib/nodes/index.js';
 
@@ -70,7 +70,7 @@ class Writables extends Pojo {
 
           if (!readonly) node.destructible({ id: surrogate, destroy: node[surrogate].subscribe((value) => {
             // console.warn( `UN-THROTTLED WRITABLE UPDATE OPERATION`);
-            console.log( `Setting [${prop}] of [node.id=${node.id}] to:`, value );
+            // console.log( `Setting [${prop}] of [node.id=${node.id}] to:`, value );
             node[prop] = value;
             // console.info('SAVE ME')
             node.debouncedSave(); // no to await result...
@@ -410,7 +410,57 @@ class Properties extends Writables {
   }
 }
 
-export default class Node extends Properties {
+class View extends Properties {
+
+
+
+  #nodes;
+  #edges;
+  #state;
+
+  // RELATED TO PARENT
+  // async view(){
+  //   this.viewChildren.set( await this.system.list(this.id) );
+  //   this.destructible({ id: 'viewChildren', destroy: this.system.records.subscribe(value=>{ this.viewChildren.set( Object.values(value).filter(o=>o.parent==this.id) ) }) })
+  //   return {nodes: this.viewChildren, edges: this.writable.edges }
+  // }
+
+
+  // RELATED TO PARENT
+  async view(){
+
+    // Fetch all the needed sub nodes.
+    await this.system.list(this.id)
+
+    // Prepare Response Singleton
+
+    if(!this.#nodes){
+      this.#nodes = writable([]);
+      this.destructible({ id: 'viewChildren', destroy: this.system.records.subscribe(value=>{ this.#nodes.set( Object.values(value).filter(o=>o.parent==this.id) ) }) })
+    }
+
+    if(!this.#edges){
+      this.#edges = this.writable.edges;
+    }
+
+    if(!this.#state){
+      this.#state = derived([this.#nodes, this.#edges], ([$nodes, $edges], set) => {
+        set( { nodes:$nodes, edges:$edges } );
+      })
+    }
+
+    return { nodes:this.#nodes, edges:this.#edges, state:this.#state };
+
+  }
+
+
+}
+
+
+
+
+
+export default class Node extends View {
 
   // NOTE: users.user.alice when each wrapped in writable = $users $user $name, which creates a datqa monitoring system for when users are added, user properties are added/removed and when name changes.
 
@@ -421,12 +471,7 @@ export default class Node extends Properties {
     this.system = system;
   }
 
-  viewChildren = writable([]);
-  async view(){
-    this.viewChildren.set( await this.system.list(this.id) );
-    this.destructible({ id: 'viewChildren', destroy: this.system.records.subscribe(value=>{ this.viewChildren.set( Object.values(value).filter(o=>o.parent==this.id) ) }) })
-    return {nodes: this.viewChildren, edges: this.writable.edges }
-  }
+
 
   add(){}
   connect(){}

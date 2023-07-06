@@ -70,7 +70,7 @@ class Writables extends Pojo {
 
           if (!readonly) node.destructible({ id: surrogate, destroy: node[surrogate].subscribe((value) => {
             // console.warn( `UN-THROTTLED WRITABLE UPDATE OPERATION`);
-            // console.log( `Setting [${prop}] of [node.id=${node.id}] to:`, value );
+            console.log( `Setting [${prop}] of [node.id=${node.id}] to:`, value );
             node[prop] = value;
             // console.info('SAVE ME')
             node.debouncedSave(); // no to await result...
@@ -370,6 +370,9 @@ class Properties extends Writables {
     });
     const dehydrated = JSON.stringify(dormant);
     this._clientVersion.edges = dehydrated;
+    this.stop();
+    this.start();
+
   }
 
   get extends() {
@@ -440,7 +443,7 @@ export default class Node extends Properties {
 
     const changes = Object.keys(patch).length;
     if(changes > 0){
-      console.log(patch);
+      // console.log(patch);
       await this.system.patch(this.id, JSON.stringify(patch));
     }
   }

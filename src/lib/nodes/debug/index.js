@@ -26,7 +26,7 @@ export default async function debug( node, options={} ){
 
   const subscription = combined.subscribe(value => {
 
-    console.log(`DEBUG NODE ${node.id} LATEST DATA:`, JSON.stringify(value), Object.keys(observables));
+    // console.log(`DEBUG NODE ${node.id} LATEST DATA:`, JSON.stringify(value), Object.keys(observables));
     const out = node.output.find(o=>o.id==='out');
     out.data.set(  value  );
 

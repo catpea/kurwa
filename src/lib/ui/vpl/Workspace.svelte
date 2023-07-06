@@ -14,6 +14,7 @@
 
   export let initial = 'editor';
   const parent = writable(); // there is no default location, this is set by on mount where await is available;
+  // const edges = writable(); // there is no default location, this is set by on mount where await is available;
   const system = getContext('system');
 
   const tabs = [
@@ -35,33 +36,63 @@
    }
   });
 
-  $: reconnect($parent);
+ // setTimeout(()=>{
+ //   reconnect($parent)
+ //
+ // },10000)
 
+
+  $: reconnect($parent);
+  // $: edgesChanged($parent, $edges);
+
+
+  let edgeSubscription = [];
   let edgeSubscriptions = [];
+
+  // async function edgesChanged(){
+  //   if(!parent) return;
+  //   console.log('XXX1: edgesChanged', $parent?.id, $parent);
+  //
+  //   // reconnect($parent);
+  //   // edgeSubscriptions.push( edges.subscribe(v=>reconnect(parent)) );
+  // }
 
   async function reconnect(parent){
     if(!parent) return;
     const view = await parent.view(); // .view returns writables.
-    const edges = view.edges;
+    const myEdges = view.edges;
 
-    if(edges){
+    if(myEdges){
       edgeSubscriptions.map(o=>o())
 
-      for (const edge of get(edges)) {
-        console.log({edge});
+
+      for (const edge of get(myEdges)) {
+        // console.log({edge});
         const subscription = edge.output.data.subscribe(v=>edge.input.data.set(v));
         edgeSubscriptions.push( subscription );
       }
+
     }
   }
 
   onMount(async () => {
     $parent = await system.root();
     await reconnect($parent);
+
+    const myEdges = $parent.writables.edges;
+
+    edgeSubscription.push( myEdges.subscribe(async v=>{
+      console.log('XXXXXX', $parent.id, v);
+      await reconnect($parent);
+
+    }));
+
+
   });
 
 
   onDestroy(() => {
+    edgeSubscription.map(o=>o())
     edgeSubscriptions.map(o=>o())
 
   });

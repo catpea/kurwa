@@ -16,7 +16,7 @@ export default async function heartbeat( node ){
   let counter = 0;
   const intervalId = setInterval(()=>{
     node.output.forEach( o=> o.data.set(counter++) );
-    console.log('BEAT', counter);
+    // console.log('BEAT', counter);
   }, 5_000);
 
 

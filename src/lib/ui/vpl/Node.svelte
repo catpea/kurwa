@@ -2,11 +2,11 @@
 
   import nodes from '$lib/nodes/index.js';
 
-  // import { browser } from '$app/environment';
   import { onMount,onDestroy,  hasContext,getContext,setContext } from 'svelte';
   import { v4 as guid } from 'uuid';
   import { debounce } from 'lodash-es';
 
+  import Writable from '$lib/ui/Writable.svelte';
   import Value from '$lib/ui/Value.svelte';
   import {draggable} from '$lib/actions/draggable.js';
   import {pullable} from '$lib/actions/pullable.js';
@@ -20,26 +20,13 @@
   const {z} = translate;
 
   export let node;
+
   onMount(async () => {
 
-
-    // const dynamicName = '/library/debug/logger/index.js'; // avoids detection by svelte compiler
-    // const {default:programModule} = await import(dynamicName);
-    // await programModule({in:'HELLO', out:'WORLD'})
-
-    // if(!node.installed){
-    //   const type = node.type||'debug';
-    //   const installer = nodes[type];
-    //   console.log(`Installing nodes for ${node.id}`);
-    //   unsubscribe.push( await installer(node, {z:get(z)}) );
-    //   node.installed = true;
-    // }
-
-
   });
+
   onDestroy(() => {
     unsubscribe.map(o=>o());
-    // node.installed = false;
   });
 
   const tests = [
@@ -50,7 +37,9 @@
   ];
 
   $: payload($z); // Update when scale changes
+
   let root = {}; // root element
+
   const { id, name, left, top, input, output } = node.writable; // auto-writables;
 
   // input.subscribe(value=>{
@@ -122,8 +111,9 @@
       {#each $output as anchor (anchor.id)}
         <div class="row g-0 ">
           <div class="col-11">
-            <div class="card-body d-flex align-items-center justify-content-end">
+            <div class="card-body">
               <h6 class="card-title">{anchor.name}</h6>
+              <Writable value={anchor.data}/>
             </div>
           </div>
           <div class="col-1 d-flex align-items-center flex-row-reverse">
@@ -140,7 +130,8 @@
           </div>
           <div class="col-11 m-0">
             <div class="card-body p-0">
-              <h5 class="card-title p-1">{anchor.name}</h5>
+              <h6 class="card-title">{anchor.name}</h6>
+              <Writable value={anchor.data}/>
             </div>
           </div>
         </div>

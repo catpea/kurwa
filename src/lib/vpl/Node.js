@@ -444,7 +444,9 @@ class View extends Properties {
     }
 
     if(!this.#state){
+      console.log('Derrived Created!!!!!!!!!!!!!!');
       this.#state = derived([this.#nodes, this.#edges], ([$nodes, $edges], set) => {
+        console.log('XXXXXXXXXXXXXXx Derrived Changed !!!!!!!!!!!!!!');
         set( { nodes:$nodes, edges:$edges } );
       })
     }
@@ -491,5 +493,11 @@ export default class Node extends View {
       // console.log(patch);
       await this.system.patch(this.id, JSON.stringify(patch));
     }
+  }
+
+
+
+  on(){
+    // noop, testing new API
   }
 }

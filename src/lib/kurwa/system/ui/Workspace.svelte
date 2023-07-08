@@ -5,24 +5,21 @@
   import { onMount,onDestroy,  beforeUpdate,afterUpdate,  hasContext,getContext,setContext } from 'svelte';
   import { readable, writable, get } from 'svelte/store';
 
-  import View from '$lib/ui/vpl/View.svelte'; // a view of nodes
-  import Commander from '$lib/ui/commander/Commander.svelte'; // a view of nodes
-  import Configuration from '$lib/ui/vpl/Configuration.svelte'; // a view of nodes
-  import Architecture from '$lib/ui/vpl/Architecture.svelte'; // a view of nodes
+  // import View from '$lib/ui/vpl/View.svelte'; // a view of nodes
+  // import Commander from '$lib/ui/commander/Commander.svelte'; // a view of nodes
+  // import Configuration from '$lib/ui/vpl/Configuration.svelte'; // a view of nodes
+  // import Architecture from '$lib/ui/vpl/Architecture.svelte'; // a view of nodes
   import Source from '$lib/ui/Source.svelte'; // a view of nodes
   import Message from '$lib/ui/Message.svelte'; // a view of nodes
 
-  export let initial = 'editor';
-
+  export let initial = 'architecture';
   const system = getContext('system');
-
   const tabs = [
     {id:'architecture', name: 'Architecture', command:'architect',},
     {id:'editor', name: 'Editor', command:'edit',},
     {id:'commander', name: 'Commander', command:'command',},
     {id:'configuration', name: 'Configuration', command:'configure',},
   ];
-
   const machine = fsm(initial, {
    editor: {},
    commander: {},
@@ -35,8 +32,19 @@
    }
   });
 
-  const parent = writable(); // this is the location currently being examined, this can change
-  let state = null; // state of the location node
+
+  const parent = writable(); // this is the location currently being examined, this can change;
+  const location = system.root({ // pre-loads all necessary nodes
+    on: {
+      'change': ()=>{}, // connection was made
+      'relocate': (node)=>$parent=node, // moved to a new location
+    }
+  });
+
+
+
+
+  const state = writable(); // state of the location node
 
   $: relocate($parent); // when we change location, change state
   $: reconnect($state); // when state changes, reconnect all nodes
@@ -45,8 +53,7 @@
 
   async function relocate(){ // When parent changes set new state object
     if(!$parent) return console.log('relocate no parent');
-    console.log('$state', $state);
-
+    $state = (await $parent.view()).state; // .set the state; // update state to new parent
   }
 
   async function reconnect(){ // when parent is set, or location changed update connections.
@@ -60,7 +67,7 @@
 
   onMount(async () => {
     $parent = await system.root(); // .set the parent;
-    state = (await $parent.view()).state; // .set the state; // update state to new parent
+    console.error('state derived failed to detect changes to .edges');
     $parent.on('change .nodes .edges', reconnect)
   });
 

@@ -44,13 +44,12 @@
   let connections = [];
 
   async function relocate(){ // When parent changes set new state object
-    if(!$parent) return console.log('relocate no parent');
-    console.log('$state', $state);
-
+    if(!$parent) return;
+    state = (await $parent.view()).state; // .set the state; // update state to new parent
   }
 
   async function reconnect(){ // when parent is set, or location changed update connections.
-    if(!$parent) return console.log('reconnect no parent');
+    if(!$parent) return;
     connections.map(o=>o())
     for (const edge of $parent.edges) {
       const subscription = edge.output.data.subscribe(v=>edge.input.data.set(v));
@@ -60,8 +59,6 @@
 
   onMount(async () => {
     $parent = await system.root(); // .set the parent;
-    state = (await $parent.view()).state; // .set the state; // update state to new parent
-    $parent.on('change .nodes .edges', reconnect)
   });
 
   onDestroy(() => {

@@ -17,7 +17,7 @@ export default async function heartbeat( node ){
   const intervalId = setInterval(()=>{
     node.output.forEach( o=> o.data.set(counter++) );
     // console.log('BEAT', counter);
-  }, 5_000);
+  }, 1_000);
 
 
   const unsubscribe = ()=>{

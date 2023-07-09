@@ -62,11 +62,11 @@ class Pullable extends Base {
     }else{
       edges.push({id:guid(), source:this.system.nodes[e.target.dataset.node], output:this.system.nodes[e.target.dataset.node].output.find(o=>o.id==e.target.dataset.anchor), destination:this.system.nodes[this.node.id], input:this.system.nodes[this.node.id].input.find(o=>o.id==this.anchor.id), color:writable("gold")})
     }
-    console.log('XXX2: edges about to ehange', parent.id, parent);
+    // console.log('XXX2: edges about to ehange', parent.id, parent);
     const existing = get(parent.writables.edges);
     const updated = existing.concat(...edges);
     parent.writables.edges.set( [...updated] );
-    
+
   }
   operate(e){
     // NOTE: this fires every few ms.

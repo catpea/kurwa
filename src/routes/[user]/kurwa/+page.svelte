@@ -4,11 +4,10 @@
 	import { readable, writable, get } from 'svelte/store';
 	import { cloneDeep, flatten } from 'lodash-es';
 
-	import System from '$lib/vpl/System.js';
-	import Workspace from '$lib/ui/vpl/Workspace.svelte';
+	import System from '$lib/kurwa/System.js';
+	import Application from '$lib/kurwa/system/ui/Application.svelte';
 
 	const system = new System();
-
 	setContext('system', system);
 
 	onMount(() => {
@@ -21,8 +20,8 @@
 </script>
 
 <svelte:head>
-	<title>VPL!</title>
+	<title>Kurwa</title>
 	<meta name="description" content="A Visual Programming Language" />
 </svelte:head>
 
-<Workspace initial="editor"/>
+<Application initial="editor"/>

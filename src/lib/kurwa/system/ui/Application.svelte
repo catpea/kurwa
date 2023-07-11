@@ -6,6 +6,7 @@
   import { readable, writable, get } from 'svelte/store';
 
   import View from '$lib/kurwa/system/ui/View.svelte'; // a view of nodes
+  import Architecture from '$lib/kurwa/system/ui/Architecture.svelte'; // a view of nodes
   // import Commander from '$lib/ui/commander/Commander.svelte'; // a view of nodes
   // import Configuration from '$lib/ui/vpl/Configuration.svelte'; // a view of nodes
   // import Architecture from '$lib/ui/vpl/Architecture.svelte'; // a view of nodes
@@ -33,9 +34,9 @@
   });
 
   // Properties
-  const location1 = writable();
-  const location2 = writable();
-  const location3 = writable();
+  const location1 = writable(null);
+  const location2 = writable(null);
+  const location3 = writable(null);
 
   // Async Boot
   onMount(async () => {
@@ -75,15 +76,15 @@
   <div class="container-fluid p-5">
   	<div class="row g-0">
   		<div class="col g-0 border-end border-dark">
-  			<View location={location1} scale={writable(1.5)}/>
+  			<View location={location1} height={480} scale={1.5}/>
   		</div>
   		<div class="col g-0">
-  			<View location={location2} scale={writable(0.2)}/>
+  			<View location={location2} height={480} scale={0.2}/>
   		</div>
   	</div>
   	<div class="row border-top border-dark">
   		<div class="col g-0">
-  			<View location={location3} scale={writable(0.69)}/>
+  			<View location={location3} height={480} scale={0.69}/>
   		</div>
   	</div>
   	<div class="row border-top border-dark">
@@ -93,11 +94,7 @@
   	</div>
   </div>
 {:else if $machine == 'architecture'}
-
- 
-
-
-  <!-- <Architecture {parent}/> -->
+  <Architecture/>
 {:else if $machine == 'commander'}
   <!-- <Commander {parent}/> -->
 {:else if $machine == 'configuration'}

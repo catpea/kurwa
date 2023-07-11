@@ -73,7 +73,8 @@ class Writables extends Pojo {
             // console.log( `Setting [${prop}] of [node.id=${node.id}] to:`, value );
             node[prop] = value;
             // console.info('SAVE ME')
-            /////////////////////////////////////////////////////////////////////////////////// node.debouncedSave(); // no to await result...
+            ///////////////////////////////////////////////////////////////////////////////////
+             node.debouncedSave(); // no to await result...
 
           }), });
           if (!readonly) node.writables[prop] = node[surrogate];
@@ -425,6 +426,14 @@ class View extends Properties {
   //   return {nodes: this.viewChildren, edges: this.writable.edges }
   // }
 
+
+  get nodes(){
+    if(!this.#nodes){
+      this.#nodes = writable([]);
+      this.destructible({ id: 'viewChildren', destroy: this.system.records.subscribe(value=>{ this.#nodes.set( Object.values(value).filter(o=>o.parent==this.id) ) }) })
+    }
+    return this.#nodes;
+  }
 
   // RELATED TO PARENT
   async view(){

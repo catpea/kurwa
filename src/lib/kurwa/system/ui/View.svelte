@@ -83,9 +83,9 @@ async function destroyEdge({detail:{node, edge}}){
 
 <div class="panzoom-parent position-relative" style="overflow: hidden; user-select: none; touch-action: none; cursor: move;">
 
-  <span class="position-absolute fw-light badge rounded bg-dark" style="left: 3px; top: 3px;">
+  <!-- <span class="position-absolute fw-light badge rounded bg-dark" style="left: 3px; top: 3px;">
     scale={$z.toFixed(2)}
-  </span>
+  </span> -->
 
   <!-- background layers -->
   <svg class="position-absolute top-0 left-0 w-100 h-100" style="pointer-events: none;"><defs><pattern id="graph-pattern-{workspaceId}" x={ $x*$z } y={ $y*$z } width="{64*$z}" height="{64*$z}" patternUnits="userSpaceOnUse"><circle class="background-dot " style="fill: var(--bs-primary-border-subtle);" r="{ 1 }" cx={32} cy={32}></circle></pattern></defs><rect width="100%" height="100%" fill="url(#graph-pattern-{workspaceId})"></rect></svg>
@@ -117,13 +117,14 @@ async function destroyEdge({detail:{node, edge}}){
 
 </div>
 
-<!-- <ol>
+<ol>
+<li>reconnect data flow</li>
 <li>redo pullline and other dep paths</li>
 <li>eliminate the generic Node and use neat specialized nodes ColorNode, ConsoleNode, etc</li>
 <li>make Anchor prettier, give it a menu</li>
 <li>z-order</li>
 <li>selection manager</li>
-</ol> -->
+</ol>
 
 <!-- {#if $nodes && $edges}
   <div bind:this={node} class="panzoom-parent position-relative" style=" overflow: hidden; user-select: none; touch-action: none; cursor: move;">

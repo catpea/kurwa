@@ -20,7 +20,8 @@
 
 </script>
 
-<svg use:toolbox={{translate, operation:createNode}} class="position-absolute" style="border: 10px solid gold; top:{$top}px; left:{$left}px; width:{$width}px; height:{$height}px;">
+<!-- warning: setting border on svg will move the anchor points -->
+<svg use:toolbox={{translate, operation:createNode}} class="position-absolute" style="top:{$top}px; left:{$left}px; width:{$width}px; height:{$height}px;">
   <defs>
     <marker id="circle" markerWidth="16" markerHeight="16" refX="8" refY="8">
       <circle cx="8" cy="8" r="2" stroke="green" fill="#ff0000" />

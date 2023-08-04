@@ -72,9 +72,19 @@
 		</div>
 	</div>
 </div>
+
+
+
 {#if $machine == 'editor'}
   <div class="container-fluid p-5">
-  	<div class="row g-0">
+
+  <div class="row border-top border-dark">
+    <div class="col border-bottom border-dark g-0">
+      <View location={location1} height={1024} scale={1}/>
+    </div>
+  </div>
+
+    <!-- <div class="row g-0">
   		<div class="col g-0 border-end border-dark">
   			<View location={location1} height={480} scale={1.5}/>
   		</div>
@@ -82,21 +92,27 @@
   			<View location={location2} height={480} scale={0.2}/>
   		</div>
   	</div>
-  	<div class="row border-top border-dark">
+
+    <div class="row border-top border-dark">
   		<div class="col g-0">
   			<View location={location3} height={480} scale={0.69}/>
   		</div>
-  	</div>
-  	<div class="row border-top border-dark">
-  		<div class="col g-0">
-        <!-- <Commander {parent}/> -->
-  		</div>
-  	</div>
+  	</div> -->
+
   </div>
+
+
+
 {:else if $machine == 'architecture'}
   <Architecture/>
+
+
+
 {:else if $machine == 'commander'}
   <!-- <Commander {parent}/> -->
+
+
+
 {:else if $machine == 'configuration'}
   <!-- <Configuration/> -->
 {/if}

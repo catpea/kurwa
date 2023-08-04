@@ -46,7 +46,7 @@
 
   let registered = {}; // anchor registration
 
-  async function remove(id){
+  async function removeNode(id){
     await system.remove(id);
   }
 
@@ -101,7 +101,7 @@
   <div bind:this={root} use:monitor={{update: payload}} class="card position-absolute shadow panzoom-exclude" use:draggable={{handle:'.card-header', left, top, translate, coverage}} style="left: {$left}px; top: {$top}px; width: 18rem; opacity: .75;">
     <div class="user-select-none card-header pe-1">
       {$name}
-      <i on:click={()=>remove($id)} class="bi bi-x-circle float-end"></i>
+      <i on:click={()=>removeNode($id)} class="bi bi-x-circle float-end"></i>
     </div>
     {#if $output}
       {#each $output as anchor (anchor.id)}

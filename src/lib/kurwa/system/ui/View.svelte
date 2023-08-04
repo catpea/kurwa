@@ -52,8 +52,8 @@ $: {
     const d = Math.max( ...$nodes.map(o=>o.left) ) + delta;
     coverage.top.set(a)
     coverage.left.set(b)
-    coverage.height.set(  Math.abs(a)+c   )
-    coverage.width.set( Math.abs(b)+d )
+    coverage.height.set( Math.abs(a)+c)
+    coverage.width.set(Math.abs(b)+d)
 
   }
 }
@@ -93,38 +93,31 @@ async function destroyEdge({detail:{node, edge}}){
   <!-- foreground -->
   <div use:panzoom={{translate}} style="height:{height}px;">
     <!-- large content zone -->
-
     <Canvas {...coverage} {translate}>
-      <!-- svg drawing zone -->
-
+      <!-- start svg drawing zone -->
       <!-- {#if $pullineActive} <Anchor color={writable("green")} x1={pulline.x1} y1={pulline.y1} x2={pulline.x2} y2={pulline.y2}  {translate} /> {/if} -->
-
       {#if $edges}
         {#each $edges as edge (edge.id)}
           <Anchor color={edge.color} node={$location.id} edge={edge.id} x1={edge.output.left} y1={edge.output.top} x2={edge.input.left} y2={edge.input.top} {translate} {coverage} on:disconnect={destroyEdge}/>
         {/each}
       {/if}
-
-      <!-- /svg drawing zone -->
+      <!-- end svg drawing zone -->
     </Canvas>
-
     {#each $nodes as node (node.id)}
       <Node {node} {translate} {coverage}/>
     {/each}
-
     <!-- /large content zone -->
   </div>
-
 </div>
 
-<ol>
+<!-- <ol>
 <li>reconnect data flow</li>
 <li>redo pullline and other dep paths</li>
 <li>eliminate the generic Node and use neat specialized nodes ColorNode, ConsoleNode, etc</li>
 <li>make Anchor prettier, give it a menu</li>
 <li>z-order</li>
 <li>selection manager</li>
-</ol>
+</ol> -->
 
 <!-- {#if $nodes && $edges}
   <div bind:this={node} class="panzoom-parent position-relative" style=" overflow: hidden; user-select: none; touch-action: none; cursor: move;">

@@ -11,7 +11,7 @@
 </script>
 
 <ol>
-  {#each stack as item}
-    <li>{item.name}</li>
+  {#each stack as item, i}
+    <li style="margin-left: {i}rem;">{item.name}</li>
   {/each}
 </ol>

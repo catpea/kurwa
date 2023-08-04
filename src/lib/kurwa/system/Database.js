@@ -22,11 +22,11 @@ export default class Database {
       await node.load(pojo);
       response = node;
       this.nodes[id]=node;
-      this.records.set(this.nodes); // NOTE: ignored becasue old and new values are the same
+      this.records.set(this.nodes);
     }else{
       response = this.nodes[id];
       await response.load(pojo);
-      this.records.set(this.nodes); // NOTE: ignored becasue old and new values are the same
+      this.records.set(this.nodes);
     }
     return response;
   }

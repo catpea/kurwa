@@ -13,6 +13,7 @@
 	onMount(() => {
 		system.mount();
 	});
+
 	onDestroy(() => {
 		system.destroy();
 	});
